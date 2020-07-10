@@ -1,0 +1,121 @@
+﻿@{
+    ViewData["Title"] = "Đăng nhập - Trang blog tôi làm kỹ thuật - Chuyên trang chém gió";
+    Layout = null;
+}
+@model ToiLamKyThuat.Models.UserViewModel
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="description" content="Trang blog Tôi làm kỹ thuật - Chuyên trang chém gió">
+    <meta name="keywords" content="Làm kỹ thuật">
+    <meta name="author" content="Dương Nguyễn Tấn Hòa">
+    <title>Đăng nhập - Trang blog tôi làm kỹ thuật</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="~/plugins/fontawesome-free/css/all.min.css">
+    <link type="image/x-icon" href="~/images/logo.png" rel="shortcut icon">
+    <link href="https://fonts.googleapis.com/css?family=PT+Sans:400,700" rel="stylesheet" type="text/css">
+    <link rel="stylesheet" href="~/plugins/icheck-bootstrap/icheck-bootstrap.min.css">
+    <link rel="stylesheet" href="~/dist/css/adminlte.min.css">
+    <link rel="stylesheet" href="~/css/account.css">
+    <link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700" rel="stylesheet">
+</head>
+<body class="hold-transition login-page">
+    <div class="d-flex justify-content-center align-items-center login-page" style="min-height:100%;" id="loginContent">
+        <div style="z-index: 2; padding-bottom: 10px;">
+            <p class="text-white h4 text-center h4"><b>ĐĂNG NHẬP</b></p>
+        </div>
+        <div class="login-box">
+            <div class="card">
+                <div class="card-body login-card-body">
+                    <div class="d-flex justify-content-center flex-column align-items-center p-1 mb-2">
+                        <img src="~/images/logo.png" style="width:70%;" />
+                    </div>
+                    <div>
+                        <div class="text-danger" id="loginResult"></div>
+                        <form id="loginForm">
+                            @Html.ValidationMessageFor(model => model.Username, "", new { @class = "text-danger" })
+                            <div class="input-group mb-3">
+                                @(Html.TextBoxFor(Model => Model.Username, new {@class="form-control", @placeholder = "Tên Đăng Nhập" }))
+                                <div class="input-group-append">
+                                    <div class="input-group-text">
+                                        <span class="fas fa-user-alt"></span>
+                                    </div>
+                                </div>
+                            </div>
+                            @Html.ValidationMessageFor(model => model.Password, "", new { @class = "text-danger" })
+                            <div class="input-group mb-3">
+                                @(Html.TextBoxFor(Model => Model.Password, new {@class="form-control", @type="password" ,@placeholder = "Mật Khẩu" }))
+                                <div class="input-group-append">
+                                    <div class="input-group-text">
+                                        <span class="fas fa-lock"></span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-8">
+                                    <div class="icheck-primary">
+                                        @Html.CheckBoxFor(model => model.Remember, new { @id = "remember" })
+                                        <label for="remember">
+                                            Lưu mật khẩu
+                                        </label>
+                                    </div>
+                                </div>
+                                <div class="col-4">
+                                    <a onclick="onLogin()" style="cursor:pointer;" class="btn btn-primary btn-block text-white"><i class="fas fa-sign-in-alt"></i></a>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                    <div class="social-auth-links text-center mb-3">
+                        <a asp-controller="Account" asp-action="SignIn" class="btn btn-block btn-danger">
+                            <i class="fab fa-google-plus mr-2"></i>Đăng nhập bằng email
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script src="~/plugins/jquery/jquery.min.js"></script>
+    <script src="~/plugins/bootstrap/js/bootstrap.bundle.min.js"></script>
+    <script src="~/dist/js/adminlte.min.js"></script>
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
+    <script src="~/lib/jquery-validation/dist/jquery.validate.min.js"></script>
+    <script src="~/lib/jquery-validation-unobtrusive/jquery.validate.unobtrusive.js"></script>
+    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js" crossorigin="anonymous"></script>
+    <script>
+        $(document).bind('keydown', function (e) {
+            if (e.which === 13) {
+                onLogin();
+            }
+        });
+        function onLogin() {
+            if ($("#loginForm").valid()) {
+                $.ajax({
+                    type: 'POST',
+                    url: "@Url.Action("LoginSubmit", "User")",
+                    data: {
+                        Username: $("#Username").val(),
+                        Password: $("#Password").val(),
+                    },
+                    success: (res) => {
+                        console.log(res);
+                        var type = res.split(" - ")[0];
+                        var content = res.split(" - ")[1];
+                        if (type === "Success") {
+                            window.location = content;
+                        }
+                        else {
+                            $("#loginResult").empty();
+                            $("#loginResult").append(content);
+                        }
+                    }
+                });
+            }
+        }
+    </script>
+    <script src="~/js/jquery.blockUI.js"></script>
+</body>
+</html>
+

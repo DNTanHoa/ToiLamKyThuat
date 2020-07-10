@@ -10,7 +10,7 @@ using ToiLamKyThuat.Data.Respositories;
 
 namespace ToiLamKyThuat.Controllers
 {
-    public class PostController : Controller
+    public class PostController : BaseController
     {
         private readonly IPostRespository _repository;
 
@@ -32,7 +32,60 @@ namespace ToiLamKyThuat.Controllers
 
         public ActionResult Create(Post model)
         {
-            model.Initialization(InitType.Insert, )
+            string note = AppGlobal.InitString;
+            model.Initialization(InitType.Insert, RequestUserID);
+            int result = _repository.Create(model);
+            if(result > 0)
+            {
+                note = AppGlobal.Success + " - " + AppGlobal.CreateSuccess;
+            }
+            else
+            {
+                note = AppGlobal.Success + " - " + AppGlobal.CreateFail;
+            }
+            return Json(note);
         }
+
+        public ActionResult Update(Post model)
+        {
+            string note = AppGlobal.InitString;
+            model.Initialization(InitType.Update, RequestUserID);
+            int result = _repository.Update(model.Id, model);
+            if (result > 0)
+            {
+                note = AppGlobal.Success + " - " + AppGlobal.CreateSuccess;
+            }
+            else
+            {
+                note = AppGlobal.Success + " - " + AppGlobal.CreateFail;
+            }
+            return Json(note);
+        }
+
+        public ActionResult Delete(long ID)
+        {
+            string note = AppGlobal.InitString;
+            int result = _repository.Delete(ID);
+            if (result > 0)
+            {
+                note = AppGlobal.Success + " - " + AppGlobal.CreateSuccess;
+            }
+            else
+            {
+                note = AppGlobal.Success + " - " + AppGlobal.CreateFail;
+            }
+            return Json(note);
+        }
+
+        public ActionResult GetByID(long ID)
+        {
+            return Json(_repository.GetByID(ID));
+        }
+
+        public ActionResult GetAllToList()
+        {
+            return Json(_repository.GetAllToList());
+        }
+
     }
 }

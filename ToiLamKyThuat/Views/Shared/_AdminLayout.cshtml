@@ -8,9 +8,9 @@
     <link rel="stylesheet" href="~/dist/css/adminlte.min.css">
     <link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700" rel="stylesheet">
     <link rel="stylesheet" href="~/plugins/jsgrid/jsgrid.min.css">
-    <link rel="apple-touch-icon" href="https://crm.vietuc.com/Images/logo_VU.png">
-    <link rel="shortcut icon" type="image/x-icon" href="https://crm.vietuc.com/Images/logo_VU.png">
+    <link rel="apple-touch-icon" href="~/images/logo.png">
     <link rel="stylesheet" href="~/plugins/jsgrid/jsgrid-theme.min.css">
+    <link type="image/x-icon" href="~/images/logo.png" rel="shortcut icon">
     <link rel="stylesheet" href="~/plugins/select2/css/select2.min.css">
     <link rel="stylesheet" href="~/css/site.css">
     <link rel="stylesheet" href="~/plugins/select2-bootstrap4-theme/select2-bootstrap4.min.css">
@@ -57,7 +57,7 @@
                             <div class="row">
                                 <div class="col-2"></div>
                                 <div class="text-center col-8">
-                                    Tập Đoàn Việt Úc
+                                    Tôi làm kỹ thuật
                                 </div>
                                 <div class="col-2"></div>
                             </div>
@@ -74,7 +74,7 @@
             <a href="index3.html" class="brand-link">
                 <img src="~/images/logo.png" alt="Logo" class="brand-image img-circle elevation-3"
                      style="opacity: .8">
-                <span class="brand-text font-weight-light">TỰ ĐỘNG HÓA</span>
+                <span class="brand-text font-weight-light">TÔI LÀM KỸ THUẬT</span>
             </a>
 
             <div class="sidebar">
@@ -90,17 +90,17 @@
                     <ul id="menuLeft" class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
                         <li class="nav-item has-treeview menu-open">
                             <a href="#" class="nav-link">
-                                <i class="nav-icon fas fa-tachometer-alt"></i>
+                                <i class="nav-icon fas fa-cog"></i>
                                 <p>
-                                    Tổng Quan
+                                    Hệ thống
                                     <i class="right fas fa-angle-left"></i>
                                 </p>
                             </a>
                             <ul class="nav nav-treeview">
                                 <li class="nav-item">
-                                    <a onclick="onMenuClick('Index','Dashboard')" class="nav-link">
+                                    <a asp-action="Index" asp-controller="User" class="nav-link">
                                         <i class="nav-icon far fa-circle"></i>
-                                        <p>Bảng giám sát</p>
+                                        <p>Thành viên</p>
                                     </a>
                                 </li>
                             </ul>
@@ -127,31 +127,7 @@
     <script src="~/js/jquery.blockUI.js"></script>
     <script>
         $(document).ready(() => {
-            var employeeName = $.cookie("UserName");
-            var employeeID = $.cookie("UserID");
-            console.log(employeeName, employeeID);
-            $("#UsernameSideBar").empty();
-            $("#UsernameSideBar").append(employeeName);
-
-            $("#UsernameHeader").empty();
-            $("#UsernameHeader").append(employeeID + ' - ' + employeeName);
-
-            $("#Username").empty();
-            $("#Username").append(employeeName);
-        });
-
-    </script>
-    <script>
-        var intervals = [];
-
-        $(document).ready(() => {
-            $.each(intervals, (index, interval) => {
-                clearInterval(interval);
-            });
-        });
-
-        $(window).on('hashchange', function (e) {
-            history.replaceState("", document.title, e.originalEvent.oldURL);
+            
         });
     </script>
     @RenderSection("Scripts", required: false)
