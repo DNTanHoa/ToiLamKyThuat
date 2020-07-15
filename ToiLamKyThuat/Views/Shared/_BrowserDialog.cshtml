@@ -1,0 +1,69 @@
+﻿@using GleamTech.AspNet.Core
+@using GleamTech.FileUltimate.AspNet.UI
+
+@{
+    var fileManager = new FileManager
+    {
+        Width = 775,
+        Height = 600,
+        Resizable = true
+    };
+
+    var rootFolder = new FileManagerRootFolder
+    {
+        Name = "Upload",
+        Location = "~/File/Upload"
+    };
+
+    rootFolder.AccessControls.Add(new FileManagerAccessControl
+    {
+        Path = @"\",
+        AllowedPermissions = FileManagerPermissions.Full
+    });
+
+    fileManager.RootFolders.Add(rootFolder);
+}
+<script>
+    var _fnCallBack = null;
+    var _closefnCallBack = null;
+    var _Data = null;
+    function Initialization(initData, fnCallBack, _closefnCallBack) {
+        _fnCallBack = fnCallBack;
+        _Data = initData;
+        $('#modal-browser').on('shown.bs.modal', function () {
+
+        });
+
+        $('#modal-browser').on('hidden.bs.modal', () => {
+            _closefnCallBack();
+        });
+
+        $('#modal-browser').modal('show');
+    }
+
+</script>
+<div class="modal fade" id="modal-browser">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header d-flex justify-content-between align-items-center">
+                <h5 class="modal-title">Xác nhận thao tác</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <i class="far fa-window-close"></i>
+                </button>
+            </div>
+            <div class="modal-body" >
+                <div class="card">
+                    @this.RenderHead(fileManager)
+                    @this.RenderBody(fileManager)
+                </div>
+            </div>
+            <div class="modal-footer d-flex justify-content-between align-items-center">
+                <button type="button" class="btn btn-primary w-100" onclick="onSubmit()" data-dismiss="modal">Xác nhận</button>
+                <button type="button" class="btn btn-dark w-100" onclick="onBrowser()" data-dismiss="modal">Tìm ảnh</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+

@@ -74,11 +74,11 @@ namespace ToiLamKyThuat.Controllers
             int result = _repository.Delete(ID);
             if (result > 0)
             {
-                note = AppGlobal.Success + " - " + AppGlobal.CreateSuccess;
+                note = AppGlobal.Success + " - " + AppGlobal.DeleteSuccess;
             }
             else
             {
-                note = AppGlobal.Success + " - " + AppGlobal.CreateFail;
+                note = AppGlobal.Success + " - " + AppGlobal.DeleteFail;
             }
             return Json(note);
         }

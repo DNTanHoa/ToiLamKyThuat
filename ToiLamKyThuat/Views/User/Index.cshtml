@@ -28,6 +28,7 @@
                 <td>
                     <div>
                         <a class="btn btn-success" onclick="onOpenDetail({{Id}})"><i class="fas fa-external-link-alt"></i></a>
+                        <button class="btn btn-danger" onclick="onConfirm({{ Id }}, 'User')"><i class="fas fa-trash"></i></button>
                     </div>
                 </td>
             </tr>
@@ -71,8 +72,38 @@
         </div>
     </div>
 </section>
+<div id="modal-area-content"></div>
 <script>
     $(document).ready(() => {
+        fetchData();
+    })
+
+    function onOpenDetail(Id) {
+        var url = "@Url.Action("Detail","User")" + "?ID=" + Id;
+        window.location.href = url;
+    }
+
+    function onConfirm(Id, Object) {
+        $.ajax({
+            type: 'GET',
+            url: "@Url.Action("ConfirmDialog", "User")",
+            data: {
+                Object: Object,
+                Id: Id
+            },
+            success: (res) => {
+                $("#modal-area-content").empty();
+                $("#modal-area-content").html(res);
+            }
+        }).done(() => {
+            Initialization(null, null, () => {
+                fetchData();
+                $("#modal-area-content").empty();
+            });
+        });
+    }
+
+    function fetchData() {
         $.ajax({
             type: 'GET',
             url: "@Url.Action("GetAllToList","User")",
@@ -87,11 +118,23 @@
                 $("#grid").html(grid);
             }
         });
-    })
+    }
 
-    function onOpenDetail(Id) {
-        var url = "@Url.Action("Detail","User")" + "?ID=" + Id;
-        window.location.href = url;
+    function Notify(type, message) {
+        switch (type) {
+            case "success":
+                toastr.success(message);
+                break;
+            case "info":
+                toastr.info(message);
+                break;
+            case "error":
+                toastr.error(message);
+                break;
+            case "warning":
+                toastr.warning(message);
+                break;
+        }
     }
 </script>
 

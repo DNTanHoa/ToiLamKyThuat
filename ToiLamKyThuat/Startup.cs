@@ -13,6 +13,7 @@ using ToiLamKyThuat.Data.Models;
 using ToiLamKyThuat.Data.Respositories;
 using Newtonsoft.Json.Serialization;
 using Microsoft.AspNetCore.Mvc.NewtonsoftJson;
+using GleamTech.AspNet.Core;
 
 namespace ToiLamKyThuat
 {
@@ -33,6 +34,8 @@ namespace ToiLamKyThuat
             services.AddDbContext<ToiLamKyThuatContext>();
             services.AddTransient<IPostRespository, PostRespository>();
             services.AddTransient<IUserRespository, UserRespository>();
+            services.AddTransient<IMasterDataRespository, MasterDataRespository>();
+            services.AddGleamTech();
         }
 
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
@@ -47,6 +50,9 @@ namespace ToiLamKyThuat
                 app.UseHsts();
             }
             app.UseHttpsRedirection();
+
+            app.UseGleamTech();
+
             app.UseStaticFiles();
 
             app.UseRouting();

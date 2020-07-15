@@ -11,5 +11,6 @@ namespace ToiLamKyThuat.Data.Models
         public string MetaTitle { get; set; }
         public string MetaKeyword { get; set; }
         public string MetaDescription { get; set; }
+        public long ParentID { get; set; }
     }
 }

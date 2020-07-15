@@ -1,0 +1,69 @@
+﻿@{
+    ViewData["Title"] = "Quản lý tập tin";
+    Layout = null;
+}
+@using GleamTech.AspNet.Core
+@using GleamTech.FileUltimate.AspNet.UI
+
+<!DOCTYPE html>
+@{
+    var fileManagerClientEvent = new FileManagerClientEvents
+    {
+        Chosen = "fileManagerChosen"
+    };
+
+    var fileManager = new FileManager
+    {
+        Resizable = true,
+        Chooser = true,
+        ClientEvents = fileManagerClientEvent
+    };
+
+    var rootFolder = new FileManagerRootFolder
+    {
+        Name = "Upload",
+        Location = "~/File/Upload"
+    };
+
+    rootFolder.AccessControls.Add(new FileManagerAccessControl
+    {
+        Path = @"\",
+        AllowedPermissions = FileManagerPermissions.Full
+    });
+
+    fileManager.RootFolders.Add(rootFolder);
+}
+<html>
+<head>
+    <title>File Manager</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1"/>
+    @this.RenderHead(fileManager)
+<script>
+    function fileManagerChosen(sender, e) {
+        console.log(e);
+        var funcNum = getUrlParam('CKEditorFuncNum');
+
+        if (!e.isCanceled) {
+            var filesRoot = "/File/";
+            var fullPath = e.items[0].fullPath;
+            var delimiterIndex = fullPath.indexOf("]:");
+            var rootName = fullPath.substr(1, delimiterIndex - 1);
+            var remaining = fullPath.substr(delimiterIndex + 2).replace(/\\/g, '/');
+            var fileUrl = filesRoot + (rootName + remaining).toLowerCase();
+            window.opener.CKEDITOR.tools.callFunction(funcNum, fileUrl);
+        }
+
+        window.close();
+    }
+
+    function getUrlParam(paramName) {
+        var reParam = new RegExp('(?:[\?&]|&)' + paramName + '=([^&]+)', 'i');
+        var match = window.location.search.match(reParam);
+        return (match && match.length > 1) ? match[1] : null;
+    }
+</script>
+</head>
+<body>
+    @this.RenderBody(fileManager)
+</body>
+</html>

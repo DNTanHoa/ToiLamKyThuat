@@ -1,0 +1,68 @@
+﻿@model ToiLamKyThuat.Models.ConfirmObjectViewModel
+<script>
+    var _fnCallBack = null;
+    var _closefnCallBack = null;
+    var _Data = null;
+    function Initialization(initData, fnCallBack, _closefnCallBack) {
+        _fnCallBack = fnCallBack;
+        _Data = initData;
+        $('#modal-confirm').on('shown.bs.modal', function () {
+
+        });
+
+        $('#modal-confirm').on('hidden.bs.modal', () => {
+            _closefnCallBack();
+        });
+
+        $('#modal-confirm').modal('show');
+    }
+
+    function onDelete() {
+        $.ajax({
+            type: 'POST',
+            url: "@Url.Action("Delete",Model.Object, new { ID = Model.Id})",
+            success: (res) => {
+                console.log(res);
+                var messageType = res.split('-')[0];
+                var note = res.split('-')[1];
+                Notify(messageType.trim(), note);
+            }
+        })
+    }
+</script>
+<div class="modal fade" id="modal-confirm">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header d-flex justify-content-between align-items-center">
+                <h5 class="modal-title">Xác nhận thao tác</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <i class="far fa-window-close"></i>
+                </button>
+            </div>
+            <div class="modal-body">
+                <form action="BufferedSingleFileUploadPhysical/?handler=Upload"
+                      enctype="multipart/form-data"
+                      method="post">
+                    <dl>
+                        <dt>
+                            <label for="FileUpload_FormFile">File</label>
+                        </dt>
+                        <dd>
+                            <input id="FileUpload_FormFile" type="file"
+                                   name="FileUpload.FormFile" />
+                        </dd>
+                    </dl>
+                    <input class="btn" type="submit" value="Upload" />
+                    <div style="margin-top:15px">
+                        <output name="result"></output>
+                    </div>
+                </form>
+
+            </div>
+            <div class="modal-footer d-flex justify-content-between align-items-center">
+                <button type="button" class="btn btn-danger w-100" onclick="onDelete()" data-dismiss="modal">Xác nhận</button>
+                <button type="button" class="btn btn-dark w-100" data-dismiss="modal">Hủy</button>
+            </div>
+        </div>
+    </div>
+</div>

@@ -35,8 +35,6 @@ namespace ToiLamKyThuat.Data.Models
         {
             modelBuilder.Entity<MasterData>(entity =>
             {
-                entity.HasNoKey();
-
                 entity.Property(e => e.Code).HasMaxLength(4000);
 
                 entity.Property(e => e.CodeName).HasMaxLength(4000);

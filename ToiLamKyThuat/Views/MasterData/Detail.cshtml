@@ -1,0 +1,122 @@
+﻿@{
+    ViewData["Title"] = "Cấu hình đối tượng - Trang Blog Tôi làm kỹ thuật";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+@model ToiLamKyThuat.Data.Models.MasterData
+<section class="content-header">
+    <div class="container-fluid">
+        <div class="row mb-2">
+            <div class="col-sm-6">
+                <h1>Cấu hình hệ thống</h1>
+            </div>
+            <div class="col-sm-6">
+                <ol class="breadcrumb float-sm-right">
+                    <li class="breadcrumb-item"><a>Hệ thống</a></li>
+                    <li class="breadcrumb-item active">Cấu hình</li>
+                </ol>
+            </div>
+        </div>
+    </div>
+</section>
+<section class="content">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="card w-100" style="overflow-x:auto;">
+                <div class="card-header">
+                    <div class="d-flex justify-content-between">
+                        <div class="toolbar">
+                            <button class="btn btn-primary" onclick="onSaveChange()"><i class="fas fa-save text-white"></i></button>
+                            <a class="btn btn-dark" asp-action="Index" asp-controller="MasterData"><i class="fas fa-arrow-left"></i></i></a>
+                        </div>
+                    </div>
+                </div>
+                <div class="card-body">
+                    <form id="MasterData">
+                        @Html.HiddenFor(Model => Model.Id)
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label for="name">Config</label>
+                                    @Html.TextBoxFor(Model => Model.Config, new { @class = "form-control", placeholder = "Config" })
+                                </div>
+                                <div class="form-group">
+                                    <label for="name">Code</label>
+                                    @Html.TextBoxFor(Model => Model.Code, new { @class = "form-control", placeholder = "Code" })
+                                </div>
+                                <div class="form-group">
+                                    <label for="name">Code name</label>
+                                    @Html.TextBoxFor(Model => Model.CodeName, new { @class = "form-control", placeholder = "CodeName" })
+                                </div>
+                                <div class="form-group">
+                                    <label>Parent</label>
+                                    <select id="ParentID" asp-for="ParentID" class="form-control select2" style="width: 100%;"></select>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label for="name">Meta title</label>
+                                    @Html.TextBoxFor(Model => Model.MetaTitle, new { @class = "form-control", placeholder = "Meta title" })
+                                </div>
+                                <div class="form-group">
+                                    <label for="name">Meta keyword</label>
+                                    @Html.TextBoxFor(Model => Model.MetaKeyword, new { @class = "form-control", placeholder = "Meta Keyword" })
+                                </div>
+                                <div class="form-group">
+                                    <label for="name">Meta description</label>
+                                    @Html.TextBoxFor(Model => Model.MetaDescription, new { @class = "form-control", placeholder = "Meta Description" })
+                                </div>
+                                <div class="form-group">
+                                    <label for="name">Ghi chú</label>
+                                    @Html.TextBoxFor(Model => Model.Note, new { @class = "form-control", placeholder = "Ghi chú" })
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<script>
+    $(document).ready(() => {
+        $('#ParentID').select2({
+            theme: 'bootstrap4',
+            minimumInputLength: 0,
+            tags: [],
+            ajax: {
+                type: 'GET',
+                url: "@Url.Action("GetByKeyword", "MasterData")",
+                data: (keyword) => {
+                    return {
+                        keyword: keyword.term
+                    }
+                },
+                cache: true,
+                processResults: (data) => {
+                    console.log(data);
+                    return {
+                        results: $.map(data, (item) => {
+                            return {
+                                text: item.CodeName,
+                                id: item.Id
+                            }
+                        })
+                    }
+                }
+            }
+        });
+    })
+
+    function onSaveChange() {
+        $.ajax({
+            type: 'POST',
+            url: "@Url.Action("SaveChange","MasterData")",
+            data: $("#MasterData").serialize(),
+            success: (res) => {
+                console.log(res);
+            }
+        });
+    }
+
+</script>
+

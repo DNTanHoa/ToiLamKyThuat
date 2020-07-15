@@ -5,6 +5,9 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="CKSource.CKFinder.Connector.Config" Version="3.5.1.1" />
+    <PackageReference Include="CKSource.CKFinder.Connector.Core" Version="3.5.1.1" />
+    <PackageReference Include="GleamTech.FileUltimate" Version="7.5.2" />
     <PackageReference Include="Microsoft.AspNetCore.Mvc.NewtonsoftJson" Version="3.1.5" />
     <PackageReference Include="Microsoft.EntityFrameworkCore" Version="3.1.5" />
     <PackageReference Include="Microsoft.Extensions.Configuration" Version="3.1.5" />
@@ -15,6 +18,18 @@
 
   <ItemGroup>
     <ProjectReference Include="..\ToiLamKyThuat.Data\ToiLamKyThuat.Data.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="Data\" />
+    <Folder Include="wwwroot\File\Upload\" />
+    <Folder Include="wwwroot\images\Upload\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Reference Include="CKFinder">
+      <HintPath>..\..\Code\Content\ckfinder\bin\Release\CKFinder.dll</HintPath>
+    </Reference>
   </ItemGroup>
 
 </Project>

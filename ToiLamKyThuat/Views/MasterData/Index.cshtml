@@ -1,0 +1,144 @@
+﻿@{
+    ViewData["Title"] = "Cấu hình - Trang Blog Tôi làm kỹ thuật";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+<script src="~/js/mustache.min.js"></script>
+<script id="gridTemplate" type="x-tmpl-mustache">
+    <table class="table table-bordered table-hover">
+        <thead>
+            <tr>
+                <th class="bg-primary" style="cursor:pointer;">ID</th>
+                <th class="bg-primary" style="cursor:pointer;">ParentID</th>
+                <th class="bg-primary" style="cursor:pointer;">Config</th>
+                <th class="bg-primary" style="cursor:pointer;">Code</th>
+                <th class="bg-primary" style="cursor:pointer;">Code name</th>
+                <th class="bg-primary" style="cursor:pointer;">Meta title</th>
+                <th class="bg-primary" style="cursor:pointer;">Meta keyword</th>
+                <th class="bg-primary" style="cursor:pointer;">Meta description</th>
+                <th class="bg-primary" style="cursor:pointer;">Thao tác</th>
+            </tr>
+        </thead>
+        <tbody>
+            {{#Data}}
+            <tr>
+                <td>{{Id}}</td>
+                <td>{{ParentID}}</td>
+                <td>{{Config}}</td>
+                <td>{{Code}}</td>
+                <td>{{CodeName}}</td>
+                <td>{{MetaTitle}}</td>
+                <td>{{MetaKeyword}}</td>
+                <td>{{MetaDescription}}</td>
+                <td>
+                    <div>
+                        <a class="btn btn-success" onclick="onOpenDetail({{Id}})"><i class="fas fa-external-link-alt"></i></a>
+                        <button class="btn btn-danger" onclick="onConfirm({{ Id }}, 'MasterData')"><i class="fas fa-trash"></i></button>
+                    </div>
+                </td>
+            </tr>
+            {{/Data}}
+        </tbody>
+    </table>
+</script>
+<section class="content-header">
+    <div class="container-fluid">
+        <div class="row mb-2">
+            <div class="col-sm-6">
+                <h1>Cấu hình hệ thống</h1>
+            </div>
+            <div class="col-sm-6">
+                <ol class="breadcrumb float-sm-right">
+                    <li class="breadcrumb-item"><a>Hệ thống</a></li>
+                    <li class="breadcrumb-item active">Cấu hình</li>
+                </ol>
+            </div>
+        </div>
+    </div>
+</section>
+<section class="content">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="card w-100" style="overflow-x:auto;">
+                <div class="card-header">
+                    <div class="d-flex justify-content-between">
+                        <div class="toolbar">
+                            <a class="btn btn-success" asp-action="Detail" asp-controller="MasterData" asp-route-ID="0"><i class="fas fa-plus text-white"></i></a>
+                        </div>
+                        <input type="text" placeholder="Tìm kiếm" class="form-control" style="flex-basis:20%;" />
+                    </div>
+                </div>
+                <div class="card-body">
+                    <div id="grid">
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<div id="modal-area-content"></div>
+<script>
+    $(document).ready(() => {
+        fetchData();
+    })
+
+    function onOpenDetail(Id) {
+        var url = "@Url.Action("Detail","MasterData")" + "?ID=" + Id;
+        window.location.href = url;
+    }
+
+    function onConfirm(Id, Object) {
+        $.ajax({
+            type: 'GET',
+            url: "@Url.Action("ConfirmDialog", "MasterData")",
+            data: {
+                Object: Object,
+                Id: Id
+            },
+            success: (res) => {
+                $("#modal-area-content").empty();
+                $("#modal-area-content").html(res);
+            }
+        }).done(() => {
+            Initialization(null, null, () => {
+                fetchData();
+                $("#modal-area-content").empty();
+            });
+        });
+    }
+
+    function fetchData() {
+        $.ajax({
+            type: 'GET',
+            url: "@Url.Action("GetAllToList", "MasterData")",
+            data: {
+
+            },
+            success: (res) => {
+                console.log(res);
+                var table = $("#gridTemplate").html();
+                var grid = Mustache.render(table, { Data: res });
+                $("#grid").empty();
+                $("#grid").html(grid);
+            }
+        });
+    }
+
+    function Notify(type, message) {
+        switch (type) {
+            case "success":
+                toastr.success(message);
+                break;
+            case "info":
+                toastr.info(message);
+                break;
+            case "error":
+                toastr.error(message);
+                break;
+            case "warning":
+                toastr.warning(message);
+                break;
+        }
+    }
+</script>
+

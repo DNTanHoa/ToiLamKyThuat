@@ -1,0 +1,53 @@
+﻿<script>
+    var _fnCallBack = null;
+    var _closefnCallBack = null;
+    var _Data = null;
+    function Initialization(initData, fnCallBack, _closefnCallBack) {
+        _fnCallBack = fnCallBack;
+        _Data = initData;
+        $('#modal-upload').on('shown.bs.modal', function () {
+
+        });
+
+        $('#modal-upload').on('hidden.bs.modal', () => {
+            _closefnCallBack();
+        });
+
+        $('#modal-upload').modal('show');
+
+        $(".custom-file-input").on("change", function () {
+            var fileName = $(this).val().split("\\").pop();
+            $(this).next(".custom-file-label").html(fileName);
+        });
+    }
+
+    function onSubmit() {
+        $("#uploadForm").submit();
+    }
+</script>
+<div class="modal fade" id="modal-upload">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header d-flex justify-content-between align-items-center">
+                <h5 class="modal-title">Xác nhận thao tác</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <i class="far fa-window-close"></i>
+                </button>
+            </div>
+            <div class="modal-body">
+                <form asp-action="Upload" asp-controller="File" id="uploadForm"
+                      enctype="multipart/form-data"
+                      method="post">
+                    <div class="custom-file">
+                        <input type="file" class="custom-file-input" id="file" name="file">
+                        <label class="custom-file-label" for="customFile">Choose file</label>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer d-flex justify-content-between align-items-center">
+                <button type="button" class="btn btn-primary w-100" onclick="onSubmit()" data-dismiss="modal">Xác nhận</button>
+                <button type="button" class="btn btn-dark w-100" onclick="onBrowser()" data-dismiss="modal">Tìm ảnh</button>
+            </div>
+        </div>
+    </div>
+</div>

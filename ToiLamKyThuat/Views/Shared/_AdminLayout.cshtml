@@ -1,5 +1,30 @@
 ﻿<!DOCTYPE html>
+@using GleamTech.AspNet.Core
+@using GleamTech.FileUltimate.AspNet.UI
+
 <html>
+@{
+    var fileManager = new FileManager
+    {
+        Width = 775,
+        Height = 600,
+        Resizable = true
+    };
+
+    var rootFolder = new FileManagerRootFolder
+    {
+        Name = "Upload",
+        Location = "~/File/Upload"
+    };
+
+    rootFolder.AccessControls.Add(new FileManagerAccessControl
+    {
+        Path = @"\",
+        AllowedPermissions = FileManagerPermissions.Full
+    });
+
+    fileManager.RootFolders.Add(rootFolder);
+}
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -30,6 +55,8 @@
     <script src="~/js/notify.js"></script>
     <script src="~/js/mustache.min.js"></script>
     <script src="~/plugins/inputmask/min/jquery.inputmask.bundle.min.js"></script>
+    <script src="~/plugins/select2/js/select2.full.min.js"></script>
+    
 </head>
 <body class="hold-transition sidebar-mini m-0">
     <div class="wrapper">
@@ -102,6 +129,31 @@
                                         <i class="nav-icon far fa-circle"></i>
                                         <p>Thành viên</p>
                                     </a>
+                                    <a asp-action="Index" asp-controller="MasterData" class="nav-link">
+                                        <i class="nav-icon far fa-circle"></i>
+                                        <p>Cấu hình</p>
+                                    </a>
+                                </li>
+                            </ul>
+                        </li>
+                        <li class="nav-item has-treeview menu-open">
+                            <a href="#" class="nav-link">
+                                <i class="nav-icon fas fa-paste"></i>
+                                <p>
+                                    Bài viết
+                                    <i class="right fas fa-angle-left"></i>
+                                </p>
+                            </a>
+                            <ul class="nav nav-treeview">
+                                <li class="nav-item">
+                                    <a asp-action="Index" asp-controller="Post" class="nav-link">
+                                        <i class="nav-icon far fa-circle"></i>
+                                        <p>Tất cả</p>
+                                    </a>
+                                    <a asp-action="PostCategory" asp-controller="MasterData" class="nav-link">
+                                        <i class="nav-icon far fa-circle"></i>
+                                        <p>Danh mục</p>
+                                    </a>
                                 </li>
                             </ul>
                         </li>
@@ -125,9 +177,10 @@
         </footer>
     </div>
     <script src="~/js/jquery.blockUI.js"></script>
+    <script src="~/ckfinder/ckfinder.js"></script>
     <script>
         $(document).ready(() => {
-            
+
         });
     </script>
     @RenderSection("Scripts", required: false)

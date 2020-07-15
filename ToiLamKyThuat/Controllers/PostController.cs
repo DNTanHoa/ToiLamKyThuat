@@ -27,7 +27,7 @@ namespace ToiLamKyThuat.Controllers
         public IActionResult Detail(int ID)
         {
             var model = _repository.GetByID(ID);
-            return View();
+            return View(model);
         }
 
         public ActionResult Create(Post model)
@@ -87,5 +87,37 @@ namespace ToiLamKyThuat.Controllers
             return Json(_repository.GetAllToList());
         }
 
+        public ActionResult SaveChange(Post model)
+        {
+            string note = AppGlobal.InitString;
+            int result = 0;
+            if (model.Id > 0)
+            {
+                model.Initialization(InitType.Update, RequestUserID);
+                result = _repository.Update(model.Id, model);
+                if (result > 0)
+                {
+                    note = AppGlobal.Success + " - " + AppGlobal.EditSuccess;
+                }
+                else
+                {
+                    note = AppGlobal.Success + " - " + AppGlobal.EditFail;
+                }
+            }
+            else
+            {
+                model.Initialization(InitType.Insert, RequestUserID);
+                result = _repository.Create(model);
+                if (result > 0)
+                {
+                    note = AppGlobal.Success + " - " + AppGlobal.CreateSuccess;
+                }
+                else
+                {
+                    note = AppGlobal.Success + " - " + AppGlobal.CreateFail;
+                }
+            }
+            return Json(note);
+        }
     }
 }

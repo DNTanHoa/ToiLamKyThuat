@@ -10,22 +10,22 @@ namespace ToiLamKyThuat.Data.Respositories
     {
         public Task<int> AsyncCreate(T model);
 
-        public Task<int> AsyncUpdate(int ID, T model);
+        public Task<int> AsyncUpdate(long ID, T model);
 
-        public Task<int> AsyncDelete(int ID);
+        public Task<int> AsyncDelete(long ID);
 
         public Task<List<T>> AsyncGetAllToList();
 
-        public Task<T> AsyncGetByID(int ID);
+        public Task<T> AsyncGetByID(long ID);
 
         public int Create(T model);
 
-        public int Update(int ID, T model);
+        public int Update(long ID, T model);
 
-        public int Delete(int ID);
+        public int Delete(long ID);
 
         public List<T> GetAllToList();
 
-        public T GetByID(int ID);
+        public T GetByID(long ID);
     }
 }

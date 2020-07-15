@@ -24,7 +24,7 @@ namespace ToiLamKyThuat.Data.Respositories
             return await _context.SaveChangesAsync();
         }
 
-        public async Task<int> AsyncDelete(int ID)
+        public async Task<int> AsyncDelete(long ID)
         {
             var existModel = await AsyncGetByID(ID);
             if (existModel != null)
@@ -40,12 +40,12 @@ namespace ToiLamKyThuat.Data.Respositories
             return result ?? new List<T>();
         }
 
-        public async Task<T> AsyncGetByID(int ID)
+        public async Task<T> AsyncGetByID(long ID)
         {
             return await _context.Set<T>().AsNoTracking().FirstOrDefaultAsync(model => model.Id == ID);
         }
 
-        public async Task<int> AsyncUpdate(int ID, T model)
+        public async Task<int> AsyncUpdate(long ID, T model)
         {
             var existModel = await AsyncGetByID(ID);
             if (existModel != null)
@@ -62,7 +62,7 @@ namespace ToiLamKyThuat.Data.Respositories
             return _context.SaveChanges();
         }
 
-        public int Delete(int ID)
+        public int Delete(long ID)
         {
             var existModel = GetByID(ID);
             if (existModel != null)
@@ -78,12 +78,12 @@ namespace ToiLamKyThuat.Data.Respositories
             return result ?? new List<T>();
         }
 
-        public T GetByID(int ID)
+        public T GetByID(long ID)
         {
             return  _context.Set<T>().AsNoTracking().FirstOrDefault(model => model.Id == ID);
         }
 
-        public int Update(int ID, T model)
+        public int Update(long ID, T model)
         {
             var existModel = GetByID(ID);
             if (existModel != null)

@@ -1,0 +1,208 @@
+﻿@{
+    ViewData["Title"] = "Nội dung bài viết";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+@model ToiLamKyThuat.Data.Models.Post
+<style>
+    .ck-editor__editable {
+        min-height: 500px;
+    }
+</style>
+<script src="~/ckeditor/ckeditor.js"></script>
+<script src="~/ckfinder/ckfinder.js"></script>
+<script>
+    $(document).ready(() => {
+        $("#UploadImage").on('click', (e) => {
+            e.preventDefault();
+            $.ajax({
+                type: 'GET',
+                url: "@Url.Action("UploadDialog", "File")",
+                success: (res) => {
+                    $("#modal-area-content").empty();
+                    $("#modal-area-content").html(res);
+                }
+            }).done(() => {
+                Initialization(null, null, () => {
+                    $("#modal-area-content").empty();
+                });
+            });
+        });
+
+        $("#BrowserImage").on('click', (e) => {
+            e.preventDefault();
+            $.ajax({
+                type: 'GET',
+                url: "@Url.Action("BrowserDialog", "File")",
+                success: (res) => {
+                    $("#modal-area-content").empty();
+                    $("#modal-area-content").html(res);
+                }
+            }).done(() => {
+                Initialization(null, null, () => {
+                    $("#modal-area-content").empty();
+                });
+            });
+        });
+
+
+        $('#Post').on('submit', function () {
+            for (instance in CKEDITOR.instances) {
+                CKEDITOR.instances[instance].updateElement();
+            }
+        });
+
+    })
+</script>
+<section class="content-header">
+    <div class="container-fluid">
+        <div class="row mb-2">
+            <div class="col-sm-6">
+                <h1>Nội dung bài viết</h1>
+            </div>
+            <div class="col-sm-6">
+                <ol class="breadcrumb float-sm-right">
+                    <li class="breadcrumb-item"><a>Bài viết</a></li>
+                    <li class="breadcrumb-item active">Chi tiết bài viết</li>
+                </ol>
+            </div>
+        </div>
+    </div>
+</section>
+<section>
+    <div class="container-fluid">
+        <div class="row">
+            <div class="card w-100" style="overflow-x:auto;">
+                <div class="card-header">
+                    <div class="d-flex justify-content-between">
+                        <div>
+                            <button class="btn btn-primary" onclick="onSaveChange()"><i class="fas fa-save text-white"></i></button>
+                            <a class="btn btn-dark" asp-action="Index" asp-controller="Post"><i class="fas fa-arrow-left"></i></i></a>
+                        </div>
+                    </div>
+                </div>
+                <div class="card-body">
+                    <form id="Post">
+                        @Html.HiddenFor(Model => Model.Id)
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="form-group">
+                                    <label for="name">Tiêu đề</label>
+                                    @Html.TextBoxFor(Model => Model.Title, new { @class = "form-control", placeholder = "Tiêu đề" })
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="form-group">
+                                    <label for="name">Phụ đề</label>
+                                    @Html.TextBoxFor(Model => Model.SubTitle, new { @class = "form-control", placeholder = "Phụ đề" })
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="form-group">
+                                    <label for="name">Tóm tắt</label>
+                                    @Html.TextBoxFor(Model => Model.Summary, new { @class = "form-control", placeholder = "Tóm tắt" })
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-11">
+                                <div class="form-group">
+                                    @Html.TextBoxFor(Model => Model.CoverImage, new { @class = "form-control", placeholder = "Ảnh bìa" })
+                                </div>
+                            </div>
+                            <div class="col-md-1">
+                                <a class="btn btn-primary w-100 text-white" id="BrowserImage"><i class="fas fa-folder-open"></i></a>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label for="name">Meta title</label>
+                                    @Html.TextBoxFor(Model => Model.MetaTitle, new { @class = "form-control", placeholder = "Meta title" })
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label for="name">Meta keyword</label>
+                                    @Html.TextBoxFor(Model => Model.MetaKeyword, new { @class = "form-control", placeholder = "Meta keyword" })
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="form-group">
+                                    <label for="name">Meta Description</label>
+                                    @Html.TextBoxFor(Model => Model.MetaDescription, new { @class = "form-control", placeholder = "Meta Description" })
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="form-group">
+                                    <label for="name">Danh mục</label>
+                                    <select id="CategoryId" asp-for="@Model.CategoryId" name="CategoryId" class="form-control select2" style="width: 100%;"></select>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="form-group">
+                                    <label for="name">Nội dung</label>
+                                    @Html.TextAreaFor(Model => Model.Content, new { @class="", rows="10", cols="80"})
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<div id="modal-area-content"></div>
+<script>
+    $(document).ready(() => {
+        $('#CategoryId').select2({
+            theme: 'bootstrap4',
+            minimumInputLength: 0,
+        });
+    })
+</script>
+<script>
+    CKEDITOR.replace('Content', {
+        filebrowserImageBrowseUrl: "@Url.Action("Index","File")",
+    });
+</script>
+<script>
+    function onSaveChange() {
+        CKEDITOR.instances.Content.updateElement();
+        $.ajax({
+            type: 'POST',
+            url: "@Url.Action("SaveChange","Post")",
+            data: $("#Post").serialize(),
+            success: (res) => {
+                console.log(res);
+            }
+        });
+    }
+</script>
+<script>
+    $(document).ready(() => {
+        $.ajax({
+            type: 'GET',
+            url: "@Url.Action("GetByConfigAndCode", "MasterData", new { Config = "ToiLamKyThuat", Code = "PostCategory"})",
+            data: {
+                Code: 'PostCategory',
+            },
+            success: (res) => {
+                let dropDown = $('#CategoryId');
+                $.each(res, (index, item) => {
+                    dropDown.append("<option value='" + item.Id + "'>" + item.CodeName + "</option>");
+                });
+            }
+        })
+    })
+</script>
+

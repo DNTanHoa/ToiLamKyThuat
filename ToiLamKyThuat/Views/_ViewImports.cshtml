@@ -1,3 +1,29 @@
-﻿@using ToiLamKyThuat
+﻿@using GleamTech.AspNet.Core
+@using GleamTech.FileUltimate.AspNet.UI
+
+@{
+    var fileManager = new FileManager
+    {
+        Width = 775,
+        Height = 600,
+        Resizable = true
+    };
+
+    var rootFolder = new FileManagerRootFolder
+    {
+        Name = "Upload",
+        Location = "~/File/Upload"
+    };
+
+    rootFolder.AccessControls.Add(new FileManagerAccessControl
+    {
+        Path = @"\",
+        AllowedPermissions = FileManagerPermissions.Full
+    });
+
+    fileManager.RootFolders.Add(rootFolder);
+}
+
+@using ToiLamKyThuat
 @using ToiLamKyThuat.Models
 @addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers

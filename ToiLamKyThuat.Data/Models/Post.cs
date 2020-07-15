@@ -14,5 +14,6 @@ namespace ToiLamKyThuat.Data.Models
         public string MetaDescription { get; set; }
         public long? CategoryId { get; set; }
         public string CategoryName { get; set; }
+        public string Content { get; set; }
     }
 }
