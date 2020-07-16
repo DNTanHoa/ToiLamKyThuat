@@ -1,6 +1,7 @@
 ﻿using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata;
+using ToiLamKyThuat.Data.DataTranferObjects;
 
 namespace ToiLamKyThuat.Data.Models
 {
@@ -22,6 +23,10 @@ namespace ToiLamKyThuat.Data.Models
         public virtual DbSet<PostComment> PostComment { get; set; }
         public virtual DbSet<PostContent> PostContent { get; set; }
         public virtual DbSet<User> User { get; set; }
+
+        #region DataTranfers Object
+        public virtual DbSet<PostDataTranferForList> PostDataTranferForList { get; set; }
+        #endregion
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {

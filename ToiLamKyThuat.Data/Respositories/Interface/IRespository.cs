@@ -27,5 +27,7 @@ namespace ToiLamKyThuat.Data.Respositories
         public List<T> GetAllToList();
 
         public T GetByID(long ID);
+
+        public List<T> GetByPageAndPageSizeToList(int Page, int PageSzie);
     }
 }

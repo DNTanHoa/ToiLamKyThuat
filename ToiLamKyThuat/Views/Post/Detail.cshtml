@@ -53,6 +53,7 @@
 
     })
 </script>
+@Html.HiddenFor(Model => Model.CategoryId, new { id = "selectCategoryID"});
 <section class="content-header">
     <div class="container-fluid">
         <div class="row mb-2">
@@ -83,6 +84,8 @@
                 <div class="card-body">
                     <form id="Post">
                         @Html.HiddenFor(Model => Model.Id)
+                        @Html.HiddenFor(Model => Model.CreateDate)
+                        @Html.HiddenFor(Model => Model.CreateUser)
                         <div class="row">
                             <div class="col-md-12">
                                 <div class="form-group">
@@ -143,7 +146,7 @@
                             <div class="col-md-12">
                                 <div class="form-group">
                                     <label for="name">Danh mục</label>
-                                    <select id="CategoryId" asp-for="@Model.CategoryId" name="CategoryId" class="form-control select2" style="width: 100%;"></select>
+                                    <select id="CategoryId" data-selected="@Model.CategoryId" asp-for="@Model.CategoryId" name="CategoryId" class="form-control select2" style="width: 100%;"></select>
                                 </div>
                             </div>
                         </div>
@@ -198,8 +201,14 @@
             },
             success: (res) => {
                 let dropDown = $('#CategoryId');
+                let selectCategoryID = $(dropDown).attr('data-selected');
                 $.each(res, (index, item) => {
-                    dropDown.append("<option value='" + item.Id + "'>" + item.CodeName + "</option>");
+                    if (item.Id == selectCategoryID) {
+                        dropDown.append("<option value='" + item.Id + "' selected>" + item.CodeName + "</option>");
+                    }
+                    else {
+                        dropDown.append("<option value='" + item.Id + "'>" + item.CodeName + "</option>");
+                    }
                 });
             }
         })

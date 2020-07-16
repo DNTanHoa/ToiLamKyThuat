@@ -2,11 +2,18 @@
 @using GleamTech.FileUltimate.AspNet.UI
 
 @{
+    var fileManagerClientEvent = new FileManagerClientEvents
+    {
+        Chosen = "fileManagerChosen"
+    };
+
     var fileManager = new FileManager
     {
-        Width = 775,
+        Resizable = true,
+        Chooser = true,
         Height = 600,
-        Resizable = true
+        Width = 775,
+        ClientEvents = fileManagerClientEvent
     };
 
     var rootFolder = new FileManagerRootFolder
@@ -41,6 +48,21 @@
         $('#modal-browser').modal('show');
     }
 
+    function fileManagerChosen(sender, e) {
+        if (!e.isCanceled) {
+            var filesRoot = "/File/";
+            var fullPath = e.items[0].fullPath;
+            var delimiterIndex = fullPath.indexOf("]:");
+            var rootName = fullPath.substr(1, delimiterIndex - 1);
+            var remaining = fullPath.substr(delimiterIndex + 2).replace(/\\/g, '/');
+            var fileUrl = filesRoot + (rootName + remaining).toLowerCase();
+            var input = $("#CoverImage");
+            if (input != undefined && input != 'undefined') {
+                input.val(fileUrl);
+            }
+        }
+        $('#modal-browser').modal('show');
+    }
 </script>
 <div class="modal fade" id="modal-browser">
     <div class="modal-dialog modal-lg">

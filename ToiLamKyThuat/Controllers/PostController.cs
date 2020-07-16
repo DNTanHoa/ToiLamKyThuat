@@ -27,7 +27,9 @@ namespace ToiLamKyThuat.Controllers
         public IActionResult Detail(int ID)
         {
             var model = _repository.GetByID(ID);
-            return View(model);
+            if(model != null)
+                return View(model);
+            return View(new Post());
         }
 
         public ActionResult Create(Post model)
@@ -85,6 +87,16 @@ namespace ToiLamKyThuat.Controllers
         public ActionResult GetAllToList()
         {
             return Json(_repository.GetAllToList());
+        }
+
+        public ActionResult GetByPageAndPageSizeToList(int Page, int PageSize)
+        {
+            return Json(_repository.GetByPageAndPageSizeToList(Page, PageSize));
+        }
+
+        public ActionResult GetPostDataTranfersByPageAndPageSizeToList(int Page, int PageSize)
+        {
+            return Json(_repository.GetPostDataTranfersByPageAndPageSizeToList(Page, PageSize));
         }
 
         public ActionResult SaveChange(Post model)

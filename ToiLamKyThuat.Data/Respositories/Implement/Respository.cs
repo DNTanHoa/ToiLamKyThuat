@@ -80,7 +80,8 @@ namespace ToiLamKyThuat.Data.Respositories
 
         public T GetByID(long ID)
         {
-            return  _context.Set<T>().AsNoTracking().FirstOrDefault(model => model.Id == ID);
+            var result =  _context.Set<T>().AsNoTracking().FirstOrDefault(model => model.Id == ID);
+            return result;
         }
 
         public int Update(long ID, T model)
@@ -92,6 +93,12 @@ namespace ToiLamKyThuat.Data.Respositories
                 _context.Set<T>().Update(existModel);
             }
             return _context.SaveChanges();
+        }
+
+        public List<T> GetByPageAndPageSizeToList(int Page, int PageSize)
+        {
+            var result = _context.Set<T>().Skip(Page * PageSize).Take(PageSize).ToList();
+            return result;
         }
     }
 }
