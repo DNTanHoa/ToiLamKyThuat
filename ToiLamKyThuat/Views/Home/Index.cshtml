@@ -1,9 +1,32 @@
 ﻿@{
     ViewData["Title"] = "Trang Blog Tôi làm kỹ thuật";
 }
+@using ToiLamKyThuat.Data.Helpers
+@section Meta {
+    <!-- Meta Facebook -->
+    <meta property="og:site_name" content="toilamkythuat.com" />
+    <meta property="og:rich_attachment" content="true" />
+    <meta property="og:type" content="website" />
+    <meta property="og:url" itemprop="url" content="http://toilamkythuat.com" />
+    <meta property="og:image" itemprop="thumbnailUrl" content="http://toilamkythuat.com/images/logo.png" />
+    <meta property="og:image:width" content="800" />
+    <meta property="og:image:height" content="354" />
+    <meta content="ToiLamKyThuat - Trang blog bàn luận và chém gió " itemprop="headline" property="og:title" />
+    <meta content="Bàn luận các vấn đề liên quan đến kỹ thuật và đời sống" itemprop="description" property="og:description" />
+    <!-- Twitter Card -->
+    <meta name="twitter:card" value="summary" />
+    <meta name="twitter:url" content="http://toilamkythuat.com" />
+    <meta name="twitter:title" content="ToiLamKyThuat - Trang blog bàn luận và chém gió " />
+    <meta name="twitter:description" content="Bàn luận các vấn đề liên quan đến kỹ thuật và đời sống..." />
+    <meta name="twitter:image" content="http://toilamkythuat.com/images/logo.png" />
+}
 <style>
     .top-header {
         border: solid 2px black;
+    }
+
+    .post-title:hover {
+        color: forestgreen;
     }
 </style>
 <section class="page-header page-header-modern page-header-background page-header-background-sm" style="background-image: url(img/demos/photography/custom-header-bg.jpg);">
@@ -17,20 +40,29 @@
 </section>
 <div class="container-fluid">
     <div class="row mt-2">
+        <div class="col-md-9"></div>
+        <div class="col-md-3">
+            <input class="form-control" placeholder="Tìm kiếm" />
+        </div>
+    </div>
+    <div class="row mt-2">
         <div class="col-md-9">
             <div class="blog-posts" id="listPost">
-                
+
             </div>
         </div>
         <div class="col-md-3">
-            <input class="form-control" placeholder="Tìm kiếm" />
             <div class="top-header mt-2"></div>
             <div>
-                <h3>Bài viết mới nhất</h3>
+                <h2 class="m-0 mb-1 mt-1">Bài viết mới nhất</h2>
+                <div id="topPost"></div>
             </div>
             <div class="top-header mt-2"></div>
             <div>
-                <h3>Tác giả</h3>
+                <h2 class="m-0 mb-1 mt-1">Tác giả</h2>
+                <img width="140" src="@(AppGlobal.Domain + "images/avatar-1.jpeg")" alt="Dương Nguyễn Tấn Hòa">
+                <p class="m-0 mb-1">Xin chào các bạn mình là <strong>Dương Nguyễn Tấn Hòa</strong>. Sinh ra và lớn lên ở Long An nơi được xem là cánh cửa chính của toàn bộ miền tây - về mặt địa lý. Tính đến thời điểm 2020 mình đã qua được 23 "nồi bánh Tét" và hiện tại đang là một lập trình viên.</p>
+                <a class="text-success" style="font-size:16px;" href="@(AppGlobal.Domain + "about.html")">Đọc thêm</a>
             </div>
             <div class="top-header mt-2"></div>
             <div>
@@ -45,32 +77,42 @@
     {{#Data}}
     <article class="post post-large">
         <div class="post-image">
-            <a href="blog-post.html">
-                <img src="{{CoverImage}}" class="img-fluid img-thumbnail img-thumbnail-no-borders rounded-0" alt="" />
+            <a href="@AppGlobal.Domain{{MetaTitle}}-{{ID}}.html">
+                <img src="{{CoverImage}}" width="100%" height="auto" class="img-fluid img-thumbnail img-thumbnail-no-borders rounded-0" alt="" />
             </a>
         </div>
         <div class="post-date">
-            <span class="day">10</span>
-            <span class="month">Jan</span>
-            <span class="year">2020</span>
+            <span class="day">{{CreateDay}}</span>
+            <span class="month">{{CreateMonth}}</span>
+            <span class="year">{{CreateYear}}</span>
         </div>
         <div class="post-content">
-            <h2 class="font-weight-semibold line-height-3 mb-3" style="color:black !important;"><a href="blog-post.html">{{Title}}</a></h2>
+            <h2 class="font-weight-semibold line-height-3 mb-3 post-title" style="color:black !important;"><a href="{{MetaTitle}}-{{ID}}.html">{{Title}}</a></h2>
             <p style="color:black !important; font-size: 18px;">
                 {{Summary}}
             </p>
             <div class="post-meta">
-                <span><i class="far fa-user"></i> By <a href="#">Admin</a> </span>
+                <span><i class="far fa-user"></i> <a href="#">Admin</a> </span>
                 <span><i class="far fa-comments"></i> <a href="#">0 Bình luận</a></span>
-                <span class="d-block d-sm-inline-block float-sm-right mt-3 mt-sm-0"><a href="blog-post.html" class="btn btn-xs btn-light text-1 text-uppercase">Đọc tiếp</a></span>
+                <span class="d-block d-sm-inline-block float-sm-right mt-3 mt-sm-0"><a href="@AppGlobal.Domain{{MetaTitle}}-{{ID}}.html" class="btn btn-light text-uppercase">Đọc tiếp</a></span>
             </div>
         </div>
     </article>
     {{/Data}}
 </script>
+<script id="topPostTemplate" type="x-tmpl-mustache">
+    {{#Data}}
+    <div class="d-flex justify-content-start align-items-center p-1">
+        <div style="flex-basis: 25%; height:50px; width:50px;">
+            <img src="{{CoverImage}}" style="width: 100%; height:auto" />
+        </div>
+        <a href="@AppGlobal.Domain{{MetaTitle}}-{{ID}}.html" class="h5 ml-2">{{Title}}</a>
+    </div>
+    {{/Data}}
+</script>
 <script>
     var Page = 0;
-    var PageSize = 20;
+    var PageSize = 10;
 
     $(document).ready(() => {
         fetchData();
@@ -86,6 +128,9 @@
             },
             success: (res) => {
                 renderListPost(res, null);
+                if (Page === 0) {
+                    renderTopPost(res);
+                }
                 Page += 1;
             }
         });
@@ -97,6 +142,14 @@
             Data: data
         });
         $("#listPost").append(html);
+    }
+
+    function renderTopPost(data) {
+        var topPostTemplate = $("#topPostTemplate").html();
+        var html = Mustache.render(topPostTemplate, {
+            Data: data
+        });
+        $("#topPost").append(html);
     }
 </script>
 

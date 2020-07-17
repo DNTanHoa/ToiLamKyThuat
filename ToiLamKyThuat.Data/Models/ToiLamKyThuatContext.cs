@@ -2,6 +2,7 @@
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata;
 using ToiLamKyThuat.Data.DataTranferObjects;
+using ToiLamKyThuat.Data.Helpers;
 
 namespace ToiLamKyThuat.Data.Models
 {
@@ -32,7 +33,7 @@ namespace ToiLamKyThuat.Data.Models
         {
             if (!optionsBuilder.IsConfigured)
             {
-                optionsBuilder.UseSqlServer("Server=.\\;Database=ToiLamKyThuat;Trusted_Connection=True;");
+                optionsBuilder.UseSqlServer(AppGlobal.ConectionString);
             }
         }
 

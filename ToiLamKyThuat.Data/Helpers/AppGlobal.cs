@@ -112,5 +112,23 @@ namespace ToiLamKyThuat.Data.Helpers
                 return builder.Build().GetSection("AppSettings").GetSection("FileFTP").Value;
             }
         }
+
+        public static string ConectionString
+        {
+            get
+            {
+                var builder = new ConfigurationBuilder().SetBasePath(Directory.GetCurrentDirectory()).AddJsonFile("appsettings.json", optional: true, reloadOnChange: true);
+                return builder.Build().GetSection("AppSettings").GetSection("ConectionString").Value;
+            }
+        }
+
+        public static string Domain
+        {
+            get
+            {
+                var builder = new ConfigurationBuilder().SetBasePath(Directory.GetCurrentDirectory()).AddJsonFile("appsettings.json", optional: true, reloadOnChange: true);
+                return builder.Build().GetSection("AppSettings").GetSection("Domain").Value;
+            }
+        }
     }
 }

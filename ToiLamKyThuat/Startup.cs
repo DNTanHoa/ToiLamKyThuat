@@ -14,6 +14,9 @@ using ToiLamKyThuat.Data.Respositories;
 using Newtonsoft.Json.Serialization;
 using Microsoft.AspNetCore.Mvc.NewtonsoftJson;
 using GleamTech.AspNet.Core;
+using System.Globalization;
+using System.Text.Encodings.Web;
+using System.Text.Unicode;
 
 namespace ToiLamKyThuat
 {
@@ -36,6 +39,7 @@ namespace ToiLamKyThuat
             services.AddTransient<IUserRespository, UserRespository>();
             services.AddTransient<IMasterDataRespository, MasterDataRespository>();
             services.AddGleamTech();
+            services.AddSingleton<HtmlEncoder>(HtmlEncoder.Create(allowedRanges: new[] { UnicodeRanges.All }));
         }
 
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
@@ -62,8 +66,19 @@ namespace ToiLamKyThuat
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapControllerRoute(
+                    name: "PostDetail",
+                    pattern: "{MetaTitle}-{Id}.html",
+                    defaults: new { controller = "Home", action = "Detail" });
+
+                endpoints.MapControllerRoute(
+                    name: "About",
+                    pattern: "about.html",
+                    defaults: new { controller = "Home", action = "About" });
+
+                endpoints.MapControllerRoute(
                     name: "default",
                     pattern: "{controller=Home}/{action=Index}/{id?}");
+
             });
         }
     }

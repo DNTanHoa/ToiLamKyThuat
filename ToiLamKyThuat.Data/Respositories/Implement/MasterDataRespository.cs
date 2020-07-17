@@ -1,4 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc.ViewFeatures;
+using Microsoft.Data.SqlClient;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -32,6 +34,16 @@ namespace ToiLamKyThuat.Data.Respositories
             return _context.MasterData.Where(item => item.Config.Equals(Config) &&
                                                      item.Code.Equals(Code) &&
                                                      item.CodeName.Contains(keyword)).ToList();
+        }
+
+        public List<MasterData> GetByConfigAndCodeRoot(string Config, string Code)
+        {
+            SqlParameter[] parameter =
+            {
+                new SqlParameter("@Config",Config),
+                new SqlParameter("@Code",Code)
+            };
+            return _context.Set<MasterData>().FromSqlRaw("sprocMasterDataGetByConfigAndCodeRoot @Config,@Code", parameter).AsEnumerable().ToList();
         }
     }
 }

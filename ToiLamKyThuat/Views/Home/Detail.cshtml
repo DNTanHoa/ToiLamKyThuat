@@ -1,0 +1,125 @@
+﻿@{
+    ViewData["Title"] = Model?.Title;
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+@model ToiLamKyThuat.Data.Models.Post
+@using ToiLamKyThuat.Data.Helpers
+@section Meta {
+    <!-- Meta Facebook -->
+    <meta property="og:type" content="article" />
+    <meta property="og:site_name" content="@AppGlobal.Domain" />
+    <meta property="og:rich_attachment" content="true" />
+    <meta property="og:url" content="@(AppGlobal.Domain + Model.MetaTitle + "-" + Model.Id + ".html")" />
+    <meta property="og:title" content="@Model.Title" />
+    <meta property="og:description" content="@Model.Title" />
+    <meta property="og:image" content="@(AppGlobal.Domain + Model.CoverImage)" />
+    <meta property="og:image:url" content="@(AppGlobal.Domain + Model.CoverImage)" />
+    <!-- Twitter Card -->
+    <meta name="twitter:card" value="summary" />
+    <meta name="twitter:url" content="@(AppGlobal.Domain + Model.MetaTitle + "-" + Model.Id + ".html")" />
+    <meta name="twitter:title" content="@Model.Title" />
+    <meta name="twitter:description" content="@Model.Title" />
+    <meta name="twitter:image" content="@(AppGlobal.Domain + Model.CoverImage)" />
+}
+<style>
+    .top-header {
+        border: solid 2px black;
+    }
+
+    .post-title:hover {
+        color: forestgreen;
+    }
+</style>
+<section class="page-header page-header-modern page-header-background page-header-background-sm" style="background-image: url(img/demos/photography/custom-header-bg.jpg);">
+    <div class="container">
+        <div class="row py-2">
+            <div class="col-md-12 align-self-center p-static order-2 text-center">
+                <h1 class="font-weight-normal text-12 m-0 pb-2">Kỹ thuật và đời sống - Tôi làm kỹ thuật</h1>
+            </div>
+        </div>
+    </div>
+</section>
+<div class="container">
+    <div class="row">
+        <div class="col-md-9">
+            @Html.HiddenFor(Model => Model.CoverImage)
+            @Html.HiddenFor(Model => Model.Title)
+            <article class="our-blog-item blog-post mt-4">
+                <span class="image-wrapper">
+                    <img src="@(AppGlobal.Domain + Model.CoverImage)" class="img-fluid" alt="@Model.Title"/>
+                </span>
+                <div class="post-infos">
+                    <span class="post-date">
+                        @Model?.CreateDate?.ToString("dd/MM/yyyy")
+                    </span>
+                    <h1 class="font-weight-normal mb-4">
+                        @Model.Title
+                    </h1>
+                    @Html.Raw(Model.Content)
+                </div>
+            </article>
+        </div>
+        <div class="col-md-3">
+            <input class="form-control" placeholder="Tìm kiếm" />
+            <div class="top-header mt-2"></div>
+            <div>
+                <h3 class="m-0 mb-1">Bài viết mới nhất</h3>
+                <div id="topPost"></div>
+            </div>
+            <div class="top-header mt-2"></div>
+            <div>
+                <h3 class="m-0 mb-1">Tác giả</h3>
+                <img width="140" src="@(AppGlobal.Domain + "images/avatar-1.jpeg")" alt="Dương Nguyễn Tấn Hòa">
+                <p class="m-0 mb-1">Xin chào các bạn mình là <strong>Dương Nguyễn Tấn Hòa</strong>. Sinh ra và lớn lên ở Long An nơi được xem là cánh cửa chính của toàn bộ miền tây - về mặt địa lý. Tính đến thời điểm 2020 mình đã qua được 23 "nồi bánh Tét" và hiện tại đang là một lập trình viên.</p>
+                <a class="text-success" style="font-size:16px;" href="@(AppGlobal.Domain + "about.html")">Đọc thêm</a>
+            </div>
+            <div class="top-header mt-2"></div>
+            <div>
+                <h3>TAGS</h3>
+            </div>
+        </div>
+    </div>
+</div>
+<script src="~/js/mustache.min.js"></script>
+<script src="~/plugins/jquery/jquery.min.js"></script>
+<script id="topPostTemplate" type="x-tmpl-mustache">
+    {{#Data}}
+    <div class="d-flex justify-content-start align-items-center p-1">
+        <div style="flex-basis: 25%; height:50px; width:50px;">
+            <img src="{{CoverImage}}" style="width: 100%; height:auto" />
+        </div>
+        <a class="h5 ml-2">{{Title}}</a>
+    </div>
+    {{/Data}}
+</script>
+<script>
+    var Page = 0;
+    var PageSize = 10;
+
+    $(document).ready(() => {
+        fetchTopPost();
+    })
+
+    function fetchTopPost() {
+        $.ajax({
+            type: 'GET',
+            url: "@Url.Action("GetPostDataTranfersByPageAndPageSizeToList", "Post")",
+            data: {
+                Page: 0,
+                PageSize: 10
+            },
+            success: (res) => {
+                renderTopPost(res);
+            }
+        });
+    }
+
+    function renderTopPost(data) {
+        var topPostTemplate = $("#topPostTemplate").html();
+        var html = Mustache.render(topPostTemplate, {
+            Data: data
+        });
+        $("#topPost").append(html);
+    }
+    
+</script>

@@ -21,9 +21,9 @@ namespace ToiLamKyThuat.Data.DataTranferObjects
 
         public string CreateDay => CreateDate.Day.ToString();
 
-        public string CrateMonth => CreateDate.Month.ToString();
+        public string CreateMonth => CreateDate.Month.ToString();
 
-        public string CrateYear => CreateDate.Year.ToString();
+        public string CreateYear => CreateDate.Year.ToString();
 
         public long CreateUser { get; set; }
 

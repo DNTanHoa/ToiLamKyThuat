@@ -28,7 +28,9 @@ namespace ToiLamKyThuat.Controllers
         public IActionResult Detail(int ID)
         {
             var model = _repository.GetByID(ID);
-            return View(model);
+            if(model != null)
+                return View(model);
+            return View(new MasterData());
         }
 
         public ActionResult Create(MasterData model)
@@ -138,6 +140,11 @@ namespace ToiLamKyThuat.Controllers
             if(string.IsNullOrEmpty(keyword))
                 return Json(_repository.GetByConfigAndCode(Config, Code));
             return Json(_repository.GetByConfigAndCodeAndKeyword(Config, Code, keyword));
+        }
+
+        public ActionResult GetByConfigAndCodeRoot(string Config, string Code)
+        {
+            return Json(_repository.GetByConfigAndCodeRoot(Config, Code));
         }
 
     }

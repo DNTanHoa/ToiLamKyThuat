@@ -49,7 +49,7 @@
                                 </div>
                                 <div class="form-group">
                                     <label>Parent</label>
-                                    <select id="ParentID" asp-for="ParentID" class="form-control select2" style="width: 100%;"></select>
+                                    <select id="ParentID"  data-selected="@Model.ParentID" asp-for="ParentID" class="form-control select2" style="width: 100%;"></select>
                                 </div>
                             </div>
                             <div class="col-md-6">
@@ -81,29 +81,6 @@
     $(document).ready(() => {
         $('#ParentID').select2({
             theme: 'bootstrap4',
-            minimumInputLength: 0,
-            tags: [],
-            ajax: {
-                type: 'GET',
-                url: "@Url.Action("GetByKeyword", "MasterData")",
-                data: (keyword) => {
-                    return {
-                        keyword: keyword.term
-                    }
-                },
-                cache: true,
-                processResults: (data) => {
-                    console.log(data);
-                    return {
-                        results: $.map(data, (item) => {
-                            return {
-                                text: item.CodeName,
-                                id: item.Id
-                            }
-                        })
-                    }
-                }
-            }
         });
     })
 
@@ -117,6 +94,25 @@
             }
         });
     }
-
+</script>
+<script>
+    $(document).ready(() => {
+        $.ajax({
+            type: 'GET',
+            url: "@Url.Action("GetAllToList", "MasterData")",
+            success: (res) => {
+                let dropDown = $('#ParentID');
+                let selectID = $(dropDown).attr('data-selected');
+                $.each(res, (index, item) => {
+                    if (item.Id == selectID) {
+                        dropDown.append("<option value='" + item.Id + "' selected>" + item.CodeName + "</option>");
+                    }
+                    else {
+                        dropDown.append("<option value='" + item.Id + "'>" + item.CodeName + "</option>");
+                    }
+                });
+            }
+        })
+    })
 </script>
 
