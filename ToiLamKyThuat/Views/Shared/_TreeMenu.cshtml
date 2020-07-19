@@ -1,0 +1,27 @@
+﻿@using ToiLamKyThuat.Data.DataTranferObjects
+@using ToiLamKyThuat.Data.Models
+@using ToiLamKyThuat.Data.Helpers
+@model IEnumerable<TreeMenuDataTranfer<MasterData>>
+
+<ul class="dropdown-menu">
+    <li class="back-button d-none d-lg-block">
+        <a class="dropdown-item" style="font-size: 16px;">
+            Quay lại
+        </a>
+    </li>
+    @foreach(var item in Model)
+    {
+        if(item.Childrens.Any())
+        {
+            @Html.Partial("~/Views/Shared/_TreeMenu.cshtml", item.Childrens)
+        }
+        else
+        {
+            <li>
+                <a class="dropdown-item" href="@(AppGlobal.Domain + item.Item.Note)" style="font-size: 16px;">
+                    @item.Item.CodeName
+                </a>
+            </li>
+        }
+    }
+</ul>

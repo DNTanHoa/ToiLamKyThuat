@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Filters;
 using ToiLamKyThuat.Data.Enums;
+using ToiLamKyThuat.Data.Extensions;
 using ToiLamKyThuat.Data.Helpers;
 using ToiLamKyThuat.Data.Models;
 using ToiLamKyThuat.Data.Respositories;
@@ -147,5 +148,10 @@ namespace ToiLamKyThuat.Controllers
             return Json(_repository.GetByConfigAndCodeRoot(Config, Code));
         }
 
+        public ActionResult HomeMenu(string Config, string Code)
+        {
+            var model = _repository.GetByConfigAndCodeRoot(Config, Code).GenerateTree(item => item.Id, item => item.ParentID);
+            return PartialView("~/Views/Shared/_HomeMenu.cshtml", model);
+        }
     }
 }

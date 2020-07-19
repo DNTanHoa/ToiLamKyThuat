@@ -33,6 +33,8 @@
                 <div class="card-body">
                     <form id="MasterData">
                         @Html.HiddenFor(Model => Model.Id)
+                        @Html.HiddenFor(Model => Model.CreateDate)
+                        @Html.HiddenFor(Model => Model.CreateUser)
                         <div class="row">
                             <div class="col-md-6">
                                 <div class="form-group">
@@ -49,7 +51,7 @@
                                 </div>
                                 <div class="form-group">
                                     <label>Parent</label>
-                                    <select id="ParentID"  data-selected="@Model.ParentID" asp-for="ParentID" class="form-control select2" style="width: 100%;"></select>
+                                    <select id="ParentID" data-selected="@Model.ParentID" asp-for="ParentID" class="form-control select2" style="width: 100%;"></select>
                                 </div>
                             </div>
                             <div class="col-md-6">

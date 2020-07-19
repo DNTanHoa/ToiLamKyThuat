@@ -15,5 +15,7 @@ namespace ToiLamKyThuat.Data.Respositories
         public List<MasterData> GetByConfigAndCodeAndKeyword(string Config, string Code, string keyword);
 
         public List<MasterData> GetByConfigAndCodeRoot(string Config, string Code);
+
+        public IEnumerable<MasterData> GetByConfigAndCodeRootToEnumerable(string Config, string Code);
     }
 }

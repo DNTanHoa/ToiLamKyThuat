@@ -38,12 +38,22 @@ namespace ToiLamKyThuat.Data.Respositories
 
         public List<MasterData> GetByConfigAndCodeRoot(string Config, string Code)
         {
-            SqlParameter[] parameter =
+            SqlParameter[] parameter = new SqlParameter[]
             {
                 new SqlParameter("@Config",Config),
                 new SqlParameter("@Code",Code)
             };
             return _context.Set<MasterData>().FromSqlRaw("sprocMasterDataGetByConfigAndCodeRoot @Config,@Code", parameter).AsEnumerable().ToList();
+        }
+
+        public IEnumerable<MasterData> GetByConfigAndCodeRootToEnumerable(string Config, string Code)
+        {
+            SqlParameter[] parameter = new SqlParameter[]
+            {
+                new SqlParameter("@Config",Config),
+                new SqlParameter("@Code",Code)
+            };
+            return _context.Set<MasterData>().FromSqlRaw("sprocMasterDataGetByConfigAndCodeRoot @Config,@Code", parameter).AsEnumerable();
         }
     }
 }

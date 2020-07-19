@@ -1,4 +1,10 @@
 ﻿@using ToiLamKyThuat.Data.Helpers
+@using ToiLamKyThuat.Data.Respositories
+@using ToiLamKyThuat.Data.Models
+@using ToiLamKyThuat.Data.Extensions
+@using System.Linq
+@inject IMasterDataRespository masterDataRespository
+
 <!DOCTYPE html>
 <html lang="en" class="side-header photography-demo-3">
 <head>
@@ -93,66 +99,11 @@
                         <div class="header-row header-row-side-header flex-row h-100 overflow-hidden pb-lg-5">
                             <div class="header-nav header-nav-links header-nav-links-side-header header-nav-links-vertical header-nav-links-vertical-slide align-self-center">
                                 <div class="header-nav-main header-nav-main-square header-nav-main-dropdown-no-borders header-nav-main-effect-4 header-nav-main-sub-effect-1">
-                                    <nav class="collapse">
-                                        <ul class="nav nav-pills" id="mainNav">
-                                            <li>
-                                                <a class="nav-link" href="#">
-                                                    Trang chủ
-                                                </a>
-                                            </li>
-                                            <li>
-                                                <a href="#" class="nav-link">
-                                                    Tác giả
-                                                </a>
-                                            </li>
-                                            <li class="dropdown">
-                                                <a href="#" class="nav-link dropdown-toggle active">
-                                                    Chủ đề
-                                                </a>
-                                                <ul class="dropdown-menu">
-                                                    <li class="back-button d-none d-lg-block">
-                                                        <a class="dropdown-item">
-                                                            Quay lại
-                                                        </a>
-                                                    </li>
-                                                    <li>
-                                                        <a class="dropdown-item" href="demo-photography-3-portfolio-stripes.html">
-                                                            Lập trình cơ bản
-                                                        </a>
-                                                    </li>
-                                                    <li>
-                                                        <a class="dropdown-item" href="demo-photography-3-portfolio-vertical.html">
-                                                            Chuyện đời
-                                                        </a>
-                                                    </li>
-                                                    <li>
-                                                        <a class="dropdown-item" href="demo-photography-3-portfolio-parallax.html">
-                                                            Chuyện linh tinh
-                                                        </a>
-                                                    </li>
-                                                    <li>
-                                                        <a class="dropdown-item" href="demo-photography-3-portfolio-horizontal-scroll.html">
-                                                            Vọc vạch
-                                                        </a>
-                                                    </li>
-                                                    <li>
-                                                        <a class="dropdown-item" href="demo-photography-3-portfolio-full-width-grid.html">
-                                                            Kinh nghiệm
-                                                        </a>
-                                                    </li>
-                                                </ul>
-                                            </li>
-                                            <li>
-                                                <a class="nav-link" href="demo-photography-3-blog.html">
-                                                    Bài viết
-                                                </a>
-                                            </li>
-                                            <li>
-                                                <a href="#" class="nav-link">
-                                                    Liên hệ
-                                                </a>
-                                            </li>
-                                        </ul>
+                                    <nav class="collapse" id="HomeMenu">
+                                        @{ 
+                                            var model = masterDataRespository.GetByConfigAndCodeRoot("ToiLamKyThuat", "Menu").GenerateTree(item => item.Id, item => item.ParentID);
+                                            @Html.Partial("~/Views/Shared/_HomeMenu.cshtml", model);
+                                        }
                                     </nav>
                                 </div>
                             </div>
@@ -180,35 +131,43 @@
                 <div class="container-fluid">
                     <div class="row">
                         <div class="col-lg-12 text-center">
-                            <p><strong class="text-uppercase">Tôi làm kỹ thuật</strong> - &copy; Bản quyền 2020 - Bảo lưu tất cả quyền.</p>
+                            <p><strong class="text-uppercase">Tôi làm kỹ thuật</strong> - &copy; Bản quyền 2020.</p>
                         </div>
                     </div>
                 </div>
             </div>
         </footer>
     </div>
-    @*<script src="~/vendor/jquery/jquery.min.js"></script>*@
-    <script src="~/vendor/jquery.appear/jquery.appear.min.js"></script>
+    @*<script src="~/vendor/jquery.appear/jquery.appear.min.js"></script>
     <script src="~/vendor/jquery.easing/jquery.easing.min.js"></script>
-    <script src="~/vendor/jquery.cookie/jquery.cookie.min.js"></script>
-    <script src="~/vendor/popper/umd/popper.min.js"></script>
-    <script src="~/vendor/bootstrap/js/bootstrap.min.js"></script>
-    <script src="~/vendor/common/common.min.js"></script>
+    <script src="~/vendor/jquery.cookie/jquery.cookie.min.js"></script>*@
+    
+    @*<script src="~/vendor/popper/umd/popper.min.js"></script>*@
+    
+    @*<script src="~/vendor/bootstrap/js/bootstrap.min.js"></script>*@
+    
+    @*<script src="~/vendor/common/common.min.js"></script>*@
+
     @*<script src="~/vendor/jquery.validation/jquery.validate.min.js"></script>*@
     @*<script src="~/vendor/jquery.easy-pie-chart/jquery.easypiechart.min.js"></script>*@
+
     <script src="~/vendor/jquery.gmap/jquery.gmap.min.js"></script>
-    @*<script src="~/vendor/jquery.lazyload/jquery.lazyload.min.js"></script>*@
-    @*<script src="~/vendor/isotope/jquery.isotope.min.js"></script>*@
-    <script src="~/vendor/owl.carousel/owl.carousel.min.js"></script>
+
+    @*<script src="~/vendor/jquery.lazyload/jquery.lazyload.min.js"></script>
+    <script src="~/vendor/isotope/jquery.isotope.min.js"></script>
+    <script src="~/vendor/owl.carousel/owl.carousel.min.js"></script>*@
+
     <script src="~/vendor/magnific-popup/jquery.magnific-popup.min.js"></script>
     <script src="~/vendor/vide/jquery.vide.min.js"></script>
     <script src="~/vendor/vivus/vivus.min.js"></script>
     <script src="~/vendor/jquery-mousewheel/jquery.mousewheel.min.js"></script>
-    @*<script src="~/js/theme.js"></script>*@
+
+    <script src="~/js/theme.js"></script>
     @*<script src="~/vendor/rs-plugin/js/jquery.themepunch.tools.min.js"></script>
-    <script src="~/vendor/rs-plugin/js/jquery.themepunch.revolution.min.js"></script>*@
+    <script src="~/vendor/rs-plugin/js/jquery.themepunch.revolution.min.js"></script>
     <script src="~/js/views/view.contact.js"></script>
-    <script src="~/js/demos/demo-photography.js"></script>
+    <script src="~/js/demos/demo-photography.js"></script>*@
+
     <script src="~/js/custom.js"></script>
     <script src="~/js/theme.init.js"></script>
 </body>
