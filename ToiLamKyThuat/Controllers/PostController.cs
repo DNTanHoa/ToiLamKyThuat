@@ -146,7 +146,7 @@ namespace ToiLamKyThuat.Controllers
                 sitemapNodes.Add(new SitemapNode
                 {
                     Url = item.IsPost != 0 ? AppGlobal.Domain + item.MetaTitle + "-" + item.ID + ".html" : AppGlobal.Domain + item.MetaTitle,
-                    LastModified = item.CreateDate,
+                    LastModified = ((DateTime)item.CreateDate).ToLocalTime(),
                     Priority = 1,
                     Frequency = SitemapFrequency.Daily
                 });
