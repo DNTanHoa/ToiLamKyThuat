@@ -130,5 +130,14 @@ namespace ToiLamKyThuat.Data.Helpers
                 return builder.Build().GetSection("AppSettings").GetSection("Domain").Value;
             }
         }
+        
+        public static string SitemapFTP
+        {
+            get
+            {
+                var builder = new ConfigurationBuilder().SetBasePath(Directory.GetCurrentDirectory()).AddJsonFile("appsettings.json", optional: true, reloadOnChange: true);
+                return builder.Build().GetSection("AppSettings").GetSection("SitemapFTP").Value;
+            }
+        }
     }
 }

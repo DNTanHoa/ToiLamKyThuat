@@ -21,6 +21,10 @@
             width: 100%;
             visibility: visible;
         }
+        #logo {
+            width:40px;
+            height:40px;
+        }
     }
 </style>
 <html lang="en" class="side-header photography-demo-3">
@@ -67,8 +71,7 @@
     <link rel="stylesheet" href="~/css/demos/demo-photography-3.css">
     <link rel="stylesheet" href="~/css/skins/skin-photography.css">
     <link rel="stylesheet" href="~/css/custom.css">
-
-    <script src="~/vendor/modernizr/modernizr.min.js"></script>
+    
 </head>
 
 <body class="loading-overlay-showing" data-loading-overlay data-plugin-options="{'hideDelay': 100}">
@@ -86,8 +89,8 @@
                     <div class="row align-items-center">
                         <div class="col-9">
                             <div class="py-4">
-                                <a href="demo-photography-3.html">
-                                    <img alt="Porto" width="94" height="36" src="@(AppGlobal.Domain + "/images/logo.jpeg")">
+                                <a href="@AppGlobal.Domain">
+                                    <img alt="@AppGlobal.Domain" width="94" height="30" src="@(AppGlobal.Domain + "/images/logo.jpeg")">
                                 </a>
                             </div>
                         </div>
@@ -111,14 +114,14 @@
                         <div class="header-row flex-row justify-content-start justify-content-lg-center py-lg-5">
                             <div class="header-logo">
                                 <a href="@(AppGlobal.Domain)">
-                                    <img alt="Porto" width="90" height="90" src="@(AppGlobal.Domain + "images/logo.jpeg")">
+                                    <img id="logo" alt="Porto" width="90" height="90" src="@(AppGlobal.Domain + "images/logo.jpeg")">
                                 </a>
                             </div>
                         </div>
                         <div class="header-row header-row-side-header flex-row h-100 overflow-hidden pb-lg-5">
                             <div class="header-nav header-nav-links header-nav-links-side-header header-nav-links-vertical header-nav-links-vertical-slide align-self-center">
                                 <div class="header-nav-main header-nav-main-square header-nav-main-dropdown-no-borders header-nav-main-effect-4 header-nav-main-sub-effect-1">
-                                    <nav class="collapse" id="HomeMenu">
+                                    <nav class="collapse">
                                         @{
                                             var model = masterDataRespository.GetByConfigAndCodeRoot("ToiLamKyThuat", "Menu").GenerateTree(item => item.Id, item => item.ParentID);
                                             @Html.Partial("~/Views/Shared/_HomeMenu.cshtml", model);
@@ -156,56 +159,42 @@
                 </div>
             </div>
         </footer>
-        <nav id="mobile-nav" class="navbar navbar-expand bg-dark" style="z-index:999;">
-            <div class="collapse navbar-collapse" id="navbarNav">
-                <ul class="navbar-nav" style="width:100%;">
-                    <li class="nav-item active" style="width:100%;">
-                        <a class="nav-link text-center" href="#" style="color:white; font-size:22px;"><i class="fas fa-home"></i></a>
-                    </li>
-                    <li class="nav-item" style="width:100%;">
-                        <a class="nav-link text-center" style="color:white; font-size:22px;" href="#"><i class="fas fa-comments"></i></a>
-                    </li>
-                    <li class="nav-item" style="width:100%;">
-                        <a class="nav-link text-center" style="color:white; font-size:22px;" href="#"><i class="fas fa-box-open"></i></a>
-                    </li>
-                    <li class="nav-item" style="width:100%;">
-                        <a class="nav-link text-center" style="color:white; font-size:22px;" href="#"><i class="fas fa-share-alt"></i></a>
-                    </li>
-                </ul>
-            </div>
-        </nav>
+        @{ 
+            var footers = masterDataRespository.GetByConfigAndCode("ToiLamKyThuat", "MobileFooterMenu");
+            @Html.Partial("~/Views/Shared/_MobileFooter.cshtml", footers);
+        }
     </div>
     @*<script src="~/vendor/jquery.appear/jquery.appear.min.js"></script>
-        <script src="~/vendor/jquery.easing/jquery.easing.min.js"></script>
-        <script src="~/vendor/jquery.cookie/jquery.cookie.min.js"></script>*@
+    <script src="~/vendor/jquery.easing/jquery.easing.min.js"></script>
+    <script src="~/vendor/jquery.cookie/jquery.cookie.min.js"></script>
+    <script src="~/vendor/popper/umd/popper.min.js"></script>
+    <script src="~/vendor/common/common.min.js"></script>
+    <script src="~/vendor/jquery.lazyload/jquery.lazyload.min.js"></script>
+    <script src="~/vendor/owl.carousel/owl.carousel.min.js"></script>
+    <script src="~/vendor/isotope/jquery.isotope.min.js"></script>
+    <script src="~/vendor/magnific-popup/jquery.magnific-popup.min.js"></script>
+    <script src="~/vendor/vide/jquery.vide.min.js"></script>
+    <script src="~/vendor/vivus/vivus.min.js"></script>
+    <script src="~/vendor/jquery-mousewheel/jquery.mousewheel.min.js"></script>*@
 
-    @*<script src="~/vendor/popper/umd/popper.min.js"></script>*@
+    <script src="~/vendor/bootstrap/js/bootstrap.min.js"></script>
 
-    @*<script src="~/vendor/bootstrap/js/bootstrap.min.js"></script>*@
 
-    @*<script src="~/vendor/common/common.min.js"></script>*@
-
-    @*<script src="~/vendor/jquery.validation/jquery.validate.min.js"></script>*@
-    @*<script src="~/vendor/jquery.easy-pie-chart/jquery.easypiechart.min.js"></script>*@
+    @*<script src="~/vendor/jquery.validation/jquery.validate.min.js"></script>
+    <script src="~/vendor/jquery.easy-pie-chart/jquery.easypiechart.min.js"></script>*@
 
     @*<script src="~/vendor/jquery.gmap/jquery.gmap.min.js"></script>*@
 
-    @*<script src="~/vendor/jquery.lazyload/jquery.lazyload.min.js"></script>
-        <script src="~/vendor/isotope/jquery.isotope.min.js"></script>
-        <script src="~/vendor/owl.carousel/owl.carousel.min.js"></script>*@
-
-    @*<script src="~/vendor/magnific-popup/jquery.magnific-popup.min.js"></script>
-        <script src="~/vendor/vide/jquery.vide.min.js"></script>
-        <script src="~/vendor/vivus/vivus.min.js"></script>
-        <script src="~/vendor/jquery-mousewheel/jquery.mousewheel.min.js"></script>*@
+   
 
     <script src="~/js/theme.js"></script>
     @*<script src="~/vendor/rs-plugin/js/jquery.themepunch.tools.min.js"></script>
-        <script src="~/vendor/rs-plugin/js/jquery.themepunch.revolution.min.js"></script>
-        <script src="~/js/views/view.contact.js"></script>
-        <script src="~/js/demos/demo-photography.js"></script>*@
+    <script src="~/vendor/rs-plugin/js/jquery.themepunch.revolution.min.js"></script>
+    <script src="~/js/views/view.contact.js"></script>*@
+    @*<script src="~/js/demos/demo-photography.js"></script>*@
 
     <script src="~/js/custom.js"></script>
-    @*<script src="~/js/theme.init.js"></script>*@
+    <script src="~/js/theme.init.js"></script>
+    @*<script src="~/vendor/modernizr/modernizr.min.js"></script>*@
 </body>
 </html>

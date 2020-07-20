@@ -22,7 +22,6 @@
             type: 'POST',
             url: "@Url.Action("Delete",Model.Object, new { ID = Model.Id})",
             success: (res) => {
-                console.log(res);
                 var messageType = res.split('-')[0];
                 var note = res.split('-')[1];
                 Notify(messageType.trim(), note);

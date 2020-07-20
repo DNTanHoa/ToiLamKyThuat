@@ -65,6 +65,7 @@
                     <div class="d-flex justify-content-between">
                         <div class="toolbar">
                             <a class="btn btn-success" asp-action="Detail" asp-controller="Post" asp-route-ID="0"><i class="fas fa-plus text-white"></i></a>
+                            <button class="btn btn-success" onclick="onCreateSitemap()"><i class="far fa-file-code"></i></button>
                         </div>
                         <input type="text" placeholder="Tìm kiếm" class="form-control" style="flex-basis:20%;" />
                     </div>
@@ -141,6 +142,21 @@
                 toastr.warning(message);
                 break;
         }
+    }
+
+    function onCreateSitemap() {
+        $.ajax({
+            type: 'POST',
+            url: "@Url.Action("CreateSitemap","Post")",
+            data: {
+
+            },
+            success: (res) => {
+                var messageType = res.split('-')[0];
+                var note = res.split('-')[1];
+                Notify(messageType.trim(), note);
+            }
+        });
     }
 </script>
 

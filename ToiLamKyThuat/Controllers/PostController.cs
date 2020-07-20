@@ -2,6 +2,8 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using AspNetCore.SEOHelper.Sitemap;
+using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
 using ToiLamKyThuat.Data.Enums;
 using ToiLamKyThuat.Data.Helpers;
@@ -13,10 +15,12 @@ namespace ToiLamKyThuat.Controllers
     public class PostController : BaseController
     {
         private readonly IPostRespository _repository;
+        private readonly IWebHostEnvironment _environment;
 
-        public PostController(IPostRespository respository)
+        public PostController(IPostRespository respository, IWebHostEnvironment environment)
         {
             _repository = respository;
+            _environment = environment;
         }
 
         public IActionResult Index()
@@ -129,6 +133,26 @@ namespace ToiLamKyThuat.Controllers
                     note = AppGlobal.Success + " - " + AppGlobal.CreateFail;
                 }
             }
+            return Json(note);
+        }
+
+        public ActionResult CreateSitemap()
+        {
+            string note = AppGlobal.InitString;
+            var items = _repository.GetSitemapDataTranferByCodeAndConfig("ToiLamKyThuat", "Menu");
+            var sitemapNodes = new List<SitemapNode>();
+            foreach(var item in items)
+            {
+                sitemapNodes.Add(new SitemapNode
+                {
+                    Url = item.IsPost != 0 ? AppGlobal.Domain + item.MetaTitle + "-" + item.ID + ".html" : AppGlobal.Domain + item.MetaTitle,
+                    LastModified = item.CreateDate,
+                    Priority = 1,
+                    Frequency = SitemapFrequency.Daily
+                });
+            }
+            new SitemapDocument().CreateSitemapXML(sitemapNodes, _environment.WebRootPath + AppGlobal.SitemapFTP);
+            note = AppGlobal.Success + " - " + AppGlobal.CreateSuccess;
             return Json(note);
         }
     }

@@ -11,5 +11,7 @@ namespace ToiLamKyThuat.Data.Respositories
         public List<PostDataTranferForList> GetPostDataTranfersToList();
 
         public List<PostDataTranferForList> GetPostDataTranfersByPageAndPageSizeToList(int Page, int PageSize);
+
+        public List<SitemapDataTranfer> GetSitemapDataTranferByCodeAndConfig(string Config, string Code);
     }
 }

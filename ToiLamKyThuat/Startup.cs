@@ -17,6 +17,8 @@ using GleamTech.AspNet.Core;
 using System.Globalization;
 using System.Text.Encodings.Web;
 using System.Text.Unicode;
+using AspNetCore.SEOHelper;
+using ToiLamKyThuat.Data.Helpers;
 
 namespace ToiLamKyThuat
 {
@@ -54,6 +56,8 @@ namespace ToiLamKyThuat
                 app.UseHsts();
             }
             app.UseHttpsRedirection();
+
+            app.UseXMLSitemap(env.ContentRootPath + AppGlobal.SitemapFTP);
 
             app.UseGleamTech();
 

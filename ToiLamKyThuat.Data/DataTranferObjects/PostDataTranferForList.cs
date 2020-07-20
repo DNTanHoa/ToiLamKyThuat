@@ -30,6 +30,5 @@ namespace ToiLamKyThuat.Data.DataTranferObjects
         public string MetaTitle { get; set; }
 
         public long ID { get; set; }
-
     }
 }

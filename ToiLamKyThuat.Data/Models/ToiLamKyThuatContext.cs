@@ -22,11 +22,11 @@ namespace ToiLamKyThuat.Data.Models
         public virtual DbSet<MasterData> MasterData { get; set; }
         public virtual DbSet<Post> Post { get; set; }
         public virtual DbSet<PostComment> PostComment { get; set; }
-        public virtual DbSet<PostContent> PostContent { get; set; }
         public virtual DbSet<User> User { get; set; }
 
         #region DataTranfers Object
         public virtual DbSet<PostDataTranferForList> PostDataTranferForList { get; set; }
+        public virtual DbSet<SitemapDataTranfer> SitemapDataTranfer { get; set; }
         #endregion
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
