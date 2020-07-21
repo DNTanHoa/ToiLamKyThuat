@@ -40,6 +40,15 @@
     <meta name="ICBM" content="13.290403, 108.426511" />
     <meta name="google-site-verification" content="tW3G9DdDMvMQkmB945pYzT8AZc-FxmUf7YGSdT0OmBU" />
     @RenderSection("Meta", required: false)
+    <!-- Global site tag (gtag.js) - Google Analytics -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=UA-173133435-1"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag() { dataLayer.push(arguments); }
+        gtag('js', new Date());
+        gtag('config', 'UA-173133435-1');
+    </script>
+
     <!-- iPad icons -->
     <link rel="apple-touch-icon-precomposed" href="http://toilamkythuat.com/images/logo.png" sizes="72x72">
     <link rel="apple-touch-icon-precomposed" href="http://toilamkythuat.com/images/logo.png" sizes="144x144">
@@ -52,6 +61,7 @@
     <link rel="apple-touch-icon-precomposed" href="http://toilamkythuat.com/images/logo.png" sizes="1x1">
 
     <title>@(ViewData["Title"] + " - Blog chém gió kỹ thuật, dịch sách và bàn luận")</title>
+    <script data-ad-client="ca-pub-2433913709180986" async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
     <link type="image/x-icon" href="http://toilamkythuat.com/images/logo.png" rel="shortcut icon">
     <link href="https://fonts.googleapis.com/css?family=PT+Sans:400,700" rel="stylesheet" type="text/css">
     <link rel="stylesheet" href="~/vendor/bootstrap/css/bootstrap.min.css">
@@ -71,7 +81,7 @@
     <link rel="stylesheet" href="~/css/demos/demo-photography-3.css">
     <link rel="stylesheet" href="~/css/skins/skin-photography.css">
     <link rel="stylesheet" href="~/css/custom.css">
-    
+
 </head>
 
 <body class="loading-overlay-showing" data-loading-overlay data-plugin-options="{'hideDelay': 100}">
