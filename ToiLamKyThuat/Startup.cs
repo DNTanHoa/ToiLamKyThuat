@@ -75,6 +75,11 @@ namespace ToiLamKyThuat
                     defaults: new { controller = "Home", action = "Detail" });
 
                 endpoints.MapControllerRoute(
+                    name: "IndexByMasterData",
+                    pattern: "{MetaTitle}",
+                    defaults: new { controller = "Home", action = "IndexByMasterData" });
+
+                endpoints.MapControllerRoute(
                     name: "About",
                     pattern: "about.html",
                     defaults: new { controller = "Home", action = "About" });

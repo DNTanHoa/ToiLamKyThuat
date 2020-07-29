@@ -30,17 +30,18 @@
 <html lang="en" class="side-header photography-demo-3">
 <head>
     <meta charset="utf-8" />
+    @RenderSection("Meta", required: false)
     <meta http-equiv="content-type" content="text/html; charset=utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <meta name="keywords" content="Kỹ thuật, lam ky thuat, ky thuat la gi, ky thuat va cuoc song, toilamkythuat" />
+    <meta name="keywords" content="Kỹ thuật, lam ky thuat, ky thuat la gi, ky thuat va cuoc song, toilamkythuat, tôi làm kỹ thuật, Tôi làm kỹ thuật" />
     <meta name="description" content="Tổng hợp các bài viết kỹ thuật và dịch sách">
     <meta name="author" content="toilamkythuat.com">
     <meta name="geo.region" content="VN" />
     <meta name="geo.position" content="13.290403;108.426511" />
     <meta name="ICBM" content="13.290403, 108.426511" />
     <meta name="google-site-verification" content="tW3G9DdDMvMQkmB945pYzT8AZc-FxmUf7YGSdT0OmBU" />
-    @RenderSection("Meta", required: false)
     <!-- Global site tag (gtag.js) - Google Analytics -->
+    <script data-ad-client="ca-pub-2433913709180986" async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
     <script async src="https://www.googletagmanager.com/gtag/js?id=UA-173133435-1"></script>
     <script>
         window.dataLayer = window.dataLayer || [];
@@ -48,7 +49,6 @@
         gtag('js', new Date());
         gtag('config', 'UA-173133435-1');
     </script>
-
     <!-- iPad icons -->
     <link rel="apple-touch-icon-precomposed" href="http://toilamkythuat.com/images/logo.png" sizes="72x72">
     <link rel="apple-touch-icon-precomposed" href="http://toilamkythuat.com/images/logo.png" sizes="144x144">
@@ -124,7 +124,7 @@
                         <div class="header-row flex-row justify-content-start justify-content-lg-center py-lg-5">
                             <div class="header-logo">
                                 <a href="@(AppGlobal.Domain)">
-                                    <img id="logo" alt="Porto" width="90" height="90" src="@(AppGlobal.Domain + "images/logo.jpeg")">
+                                    <img id="logo" alt="@(AppGlobal.Domain)" width="90" height="90" src="@(AppGlobal.Domain + "images/logo.jpeg")">
                                 </a>
                             </div>
                         </div>

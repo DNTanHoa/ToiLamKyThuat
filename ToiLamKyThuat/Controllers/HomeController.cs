@@ -5,6 +5,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
+using ToiLamKyThuat.Data.Models;
 using ToiLamKyThuat.Data.Respositories;
 using ToiLamKyThuat.Models;
 
@@ -16,10 +17,13 @@ namespace ToiLamKyThuat.Controllers
 
         private readonly IPostRespository _respository;
 
-        public HomeController(ILogger<HomeController> logger, IPostRespository respository)
+        private readonly IMasterDataRespository _masterDataRespository;
+
+        public HomeController(ILogger<HomeController> logger, IPostRespository respository, IMasterDataRespository masterDataRespository)
         {
             _logger = logger;
             _respository = respository;
+            _masterDataRespository = masterDataRespository;
         }
 
         public IActionResult Index()
@@ -40,6 +44,12 @@ namespace ToiLamKyThuat.Controllers
 
         public IActionResult About()
         {
+            return View();
+        }
+
+        public IActionResult IndexByMasterData(string MetaTitle)
+        {
+            var model = _masterDataRespository.GetByMetaTitle(MetaTitle) ?? new MasterData();
             return View();
         }
 

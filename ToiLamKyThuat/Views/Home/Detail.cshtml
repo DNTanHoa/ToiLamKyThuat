@@ -5,6 +5,8 @@
 @model ToiLamKyThuat.Data.Models.Post
 @using ToiLamKyThuat.Data.Helpers
 @section Meta {
+    <meta name="keywords" content="@Model.MetaKeyword" />
+    <meta name="description" content="@Model.MetaDescription" />
     <!-- Meta Facebook -->
     <meta property="og:type" content="article" />
     <meta property="og:site_name" content="@AppGlobal.Domain" />
@@ -54,7 +56,7 @@
             @Html.HiddenFor(Model => Model.Title)
             <article class="our-blog-item blog-post mt-4">
                 <span class="image-wrapper">
-                    <img src="@(AppGlobal.Domain + Model.CoverImage)" class="img-fluid" alt="@Model.Title"/>
+                    <img src="@(AppGlobal.Domain + Model.CoverImage)" class="img-fluid" alt="@Model.Title" />
                 </span>
                 <div class="post-infos" style="width:100%;">
                     <span class="post-date">
@@ -76,15 +78,21 @@
             </div>
             <div class="top-header mt-2"></div>
             <div>
+                <div id="fb-root"></div>
+                <script async defer crossorigin="anonymous" src="https://connect.facebook.net/vi_VN/sdk.js#xfbml=1&version=v7.0" nonce="ty5EGvTK"></script>
+                <div class="fb-page mt-2" data-href="https://www.facebook.com/T%C3%B4i-l%C3%A0m-k%E1%BB%B9-thu%E1%BA%ADt-115117700293285" data-tabs="timeline" data-width="" data-height="" data-small-header="false" data-adapt-container-width="true" data-hide-cover="false" data-show-facepile="false"><blockquote cite="https://www.facebook.com/T%C3%B4i-l%C3%A0m-k%E1%BB%B9-thu%E1%BA%ADt-115117700293285" class="fb-xfbml-parse-ignore"><a href="https://www.facebook.com/T%C3%B4i-l%C3%A0m-k%E1%BB%B9-thu%E1%BA%ADt-115117700293285">Tôi làm kỹ thuật</a></blockquote></div>
+            </div>
+            <div class="top-header mt-2"></div>
+            <div>
                 <h3 class="m-0 mb-1">Tác giả</h3>
                 <img width="140" src="@(AppGlobal.Domain + "images/avatar-1.jpeg")" alt="Dương Nguyễn Tấn Hòa">
                 <p class="m-0 mb-1" style="font-size: 14px; color:black;">Xin chào các bạn mình là <strong>Dương Nguyễn Tấn Hòa</strong>. Sinh ra và lớn lên ở Long An nơi được xem là cánh cửa chính của toàn bộ miền tây - về mặt địa lý. Tính đến thời điểm 2020 mình đã qua được 23 "nồi bánh Tét" và hiện tại đang là một lập trình viên.</p>
                 <a class="text-success" style="font-size:16px;" href="@(AppGlobal.Domain + "about.html")">Đọc thêm</a>
             </div>
             @*<div class="top-header mt-2"></div>
-            <div>
-                <h3 class="m-0 mb-1">Tác giả</h3>
-            </div>*@
+        <div>
+            <h3 class="m-0 mb-1">Tác giả</h3>
+        </div>*@
         </div>
     </div>
 </div>
@@ -92,11 +100,11 @@
 <script src="~/plugins/jquery/jquery.min.js"></script>
 <script id="topPostTemplate" type="x-tmpl-mustache">
     {{#Data}}
-    <div class="d-flex justify-content-start align-items-center p-1">
+    <div class="d-flex justify-content-start align-items-center p-2">
         <div style="flex-basis: 25%; height:50px; width:50px;">
             <img src="{{CoverImage}}" style="width: 100%; height:auto" />
         </div>
-        <a class="h5 ml-2">{{Title}}</a>
+        <a href="@AppGlobal.Domain{{MetaTitle}}-{{ID}}.html" class="h5 ml-2">{{Title}}</a>
     </div>
     {{/Data}}
 </script>
@@ -129,5 +137,5 @@
         });
         $("#topPost").append(html);
     }
-    
+
 </script>

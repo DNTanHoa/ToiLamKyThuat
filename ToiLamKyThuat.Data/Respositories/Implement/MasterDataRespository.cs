@@ -55,5 +55,10 @@ namespace ToiLamKyThuat.Data.Respositories
             };
             return _context.Set<MasterData>().FromSqlRaw("sprocMasterDataGetByConfigAndCodeRoot @Config,@Code", parameter).AsEnumerable();
         }
+
+        public MasterData GetByMetaTitle(string MetaTitle)
+        {
+            return _context.MasterData.FirstOrDefault(item => item.MetaTitle.Equals(MetaTitle));
+        }
     }
 }
